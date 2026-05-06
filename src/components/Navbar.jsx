@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, Clock, Zap } from 'lucide-react';
+import { Menu, X, Clock, Zap, Sun, Moon } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const location = useLocation();
 
   const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
@@ -14,9 +15,26 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+    
+    // Check local storage for theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setIsDark(savedTheme === 'dark');
+      document.body.className = savedTheme;
+    } else {
+      document.body.className = 'dark';
+    }
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDark ? 'dark' : 'light';
+    setIsDark(!isDark);
+    document.body.className = newTheme;
+    localStorage.setItem('theme', newTheme);
+  };
 
   const navLinks = [
     { name: 'Ana Sayfa', path: '/' },
@@ -49,7 +67,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden-mobile" style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
+        <div className="hidden-mobile" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           {navLinks.map((link) => (
             <Link 
               key={link.path} 
@@ -61,12 +79,25 @@ const Navbar = () => {
                 opacity: location.pathname === link.path ? 1 : 0.7,
                 transition: 'all 0.3s'
               }}
-              onMouseEnter={(e) => e.target.style.opacity = 1}
-              onMouseLeave={(e) => e.target.style.opacity = (location.pathname === link.path ? 1 : 0.7)}
             >
               {link.name}
             </Link>
           ))}
+          
+          <button 
+            onClick={toggleTheme}
+            style={{ 
+              background: 'none', 
+              color: 'inherit', 
+              cursor: 'pointer', 
+              padding: '0.5rem',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+
           <a 
             href={whatsappUrl} 
             className="btn-primary"
@@ -80,9 +111,14 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button className="mobile-only" onClick={() => setIsOpen(!isOpen)} style={{ background: 'none', color: 'inherit' }}>
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        <div className="mobile-only flex" style={{ gap: '1rem', alignItems: 'center' }}>
+          <button onClick={toggleTheme} style={{ background: 'none', color: 'inherit' }}>
+            {isDark ? <Sun size={24} /> : <Moon size={24} />}
+          </button>
+          <button onClick={() => setIsOpen(!isOpen)} style={{ background: 'none', color: 'inherit' }}>
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav Menu */}
@@ -124,10 +160,10 @@ const Navbar = () => {
       )}
 
       <style dangerouslySetInnerHTML={{ __html: `
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
           .hidden-mobile { display: none !important; }
         }
-        @media (min-width: 901px) {
+        @media (min-width: 1025px) {
           .mobile-only { display: none !important; }
         }
       `}} />

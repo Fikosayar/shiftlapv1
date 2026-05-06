@@ -7,12 +7,10 @@ import {
   BarChart3, 
   Smartphone, 
   Monitor, 
-  Clock, 
   ArrowRight,
-  Star,
-  CheckCircle2,
   HelpCircle
 } from 'lucide-react';
+import dashboardImg from '../assets/hero.png';
 
 const HomePage = () => {
   const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
@@ -34,7 +32,7 @@ const HomePage = () => {
               style={{ 
                 padding: '0.5rem 1.5rem', 
                 borderRadius: '50px', 
-                backgroundColor: 'rgba(99, 102, 241, 0.1)', 
+                backgroundColor: 'rgba(255, 107, 0, 0.1)', 
                 border: '1px solid var(--primary)', 
                 color: 'var(--primary)',
                 fontWeight: '700',
@@ -49,7 +47,7 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               className="section-title"
-              style={{ lineHeight: 1 }}
+              style={{ lineHeight: 1.1 }}
             >
               İş Gücünüzü <br />
               <span style={{ color: 'var(--primary)' }}>Akıllıca</span> Yönetin
@@ -101,7 +99,7 @@ const HomePage = () => {
             <div className="glass" style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.02)' }}>
                <div style={{ 
                  width: '100%', 
-                 aspectRatio: '16/7', 
+                 aspectRatio: '16/8', 
                  backgroundColor: '#000', 
                  borderRadius: '16px', 
                  display: 'flex', 
@@ -110,16 +108,16 @@ const HomePage = () => {
                  border: '1px solid var(--glass-border)',
                  position: 'relative',
                  overflow: 'hidden',
-                 boxShadow: '0 0 40px rgba(255,107,0,0.15)'
+                 boxShadow: '0 0 50px rgba(255,107,0,0.2)'
                }}>
                   <img 
-                    src="/src/assets/hero.png" 
+                    src={dashboardImg} 
                     alt="Shiftlap Dashboard" 
                     style={{ 
                       width: '100%', 
                       height: '100%', 
                       objectFit: 'cover',
-                      opacity: 0.9
+                      opacity: 0.95
                     }} 
                   />
                   <div style={{ 
@@ -134,23 +132,6 @@ const HomePage = () => {
                </div>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Trust & Social Proof */}
-      <section style={{ padding: '4rem 0', backgroundColor: 'rgba(99, 102, 241, 0.02)' }}>
-        <div className="container">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-            <div style={{ maxWidth: '400px' }}>
-              <h2 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '1rem' }}>Sektör Liderlerinin Tercihi</h2>
-              <p style={{ color: 'var(--text-muted)' }}>Türkiye genelinde 500'den fazla şirket Shiftlap ile operasyonlarını dijitalleştirdi.</p>
-            </div>
-            <div className="grid md:grid-cols-3" style={{ gap: '2rem', width: '100%' }}>
-               {[1, 2, 3].map(i => (
-                 <div key={i} style={{ opacity: 0.3, fontSize: '1.5rem', fontWeight: '900', textAlign: 'center' }}>LOGO {i}</div>
-               ))}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -246,7 +227,7 @@ const HomePage = () => {
             padding: '5rem', 
             textAlign: 'center', 
             color: 'white',
-            boxShadow: '0 30px 60px -12px rgba(255, 107, 0, 0.4)'
+            boxShadow: '0 30px 60px -12px var(--primary-glow)'
           }}>
             <h2 style={{ fontSize: '3rem', fontWeight: '900', marginBottom: '1.5rem' }}>Hemen Ücretsiz Başlayın</h2>
             <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>

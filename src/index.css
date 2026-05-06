@@ -13,15 +13,22 @@
   --font-family: 'Outfit', sans-serif;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #f8fafc;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --text-main: #0f172a;
-    --text-muted: #475569;
-    --glass-border: rgba(0, 0, 0, 0.05);
-    --nav-bg: rgba(248, 250, 252, 0.8);
-  }
+body.light {
+  --background: #f8fafc;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --nav-bg: rgba(248, 250, 252, 0.8);
+}
+
+body.dark {
+  --background: #020617;
+  --card-bg: rgba(15, 23, 42, 0.7);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --nav-bg: rgba(2, 6, 23, 0.8);
 }
 
 * {
@@ -36,8 +43,9 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
+/* Diğer stiller aynı kalacak... */
 
 .container {
   max-width: 1200px;
@@ -45,7 +53,6 @@ body {
   padding: 0 1.5rem;
 }
 
-/* Layout Utilities */
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
@@ -60,7 +67,6 @@ body {
   .md\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* Glassmorphism */
 .glass {
   background: var(--card-bg);
   backdrop-filter: blur(16px);
@@ -76,7 +82,6 @@ body {
   transform: translateY(-5px);
 }
 
-/* Buttons */
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
@@ -89,15 +94,8 @@ body {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 15px -3px var(--primary-glow);
 }
 
-.btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 25px -5px var(--primary-glow);
-}
-
-/* Background Blobs */
 .blob {
   position: absolute;
   width: 400px;
@@ -108,11 +106,6 @@ body {
   border-radius: 50%;
   z-index: -1;
   pointer-events: none;
-}
-
-/* Typography */
-h1, h2, h3 {
-  letter-spacing: -0.02em;
 }
 
 .section-title {
@@ -131,7 +124,6 @@ h1, h2, h3 {
   margin: 0 auto 4rem auto;
 }
 
-/* Navbar */
 nav {
   position: fixed;
   top: 0;
