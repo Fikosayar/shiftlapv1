@@ -1,21 +1,24 @@
 # Stage 1: Build
-FROM node:20-slim AS build
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
+# Sadece gerekli dosyaları kopyala
 COPY package*.json ./
+
+# Cache temizliği ve temiz kurulum
 RUN npm install
 
 COPY . .
 RUN npm run build
 
 # Stage 2: Serve
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
-# Nginx yapılandırmasını kopyala
+# Nginx ayarları
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Build edilen dosyaları Nginx'e kopyala
+# Dosyaları kopyala
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
