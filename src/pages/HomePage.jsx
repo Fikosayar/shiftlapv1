@@ -98,31 +98,39 @@ const HomePage = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
             style={{ marginTop: '6rem' }}
           >
-            <div className="glass" style={{ padding: '1rem', background: 'rgba(255,255,255,0.02)' }}>
+            <div className="glass" style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.02)' }}>
                <div style={{ 
                  width: '100%', 
-                 aspectRatio: '16/9', 
-                 backgroundColor: 'rgba(15, 23, 42, 0.8)', 
+                 aspectRatio: '16/7', 
+                 backgroundColor: '#000', 
                  borderRadius: '16px', 
                  display: 'flex', 
                  alignItems: 'center', 
                  justifyContent: 'center',
                  border: '1px solid var(--glass-border)',
                  position: 'relative',
-                 overflow: 'hidden'
+                 overflow: 'hidden',
+                 boxShadow: '0 0 40px rgba(255,107,0,0.15)'
                }}>
-                  <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'flex', gap: '8px' }}>
-                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f56' }}></div>
-                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }}></div>
-                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }}></div>
-                  </div>
-                  <Monitor size={80} style={{ opacity: 0.1, color: 'var(--primary)' }} />
-                  <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                     <h3 style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '1rem' }}>Shiftlap Yönetim Paneli</h3>
-                     <p style={{ color: 'var(--text-muted)' }}>Tüm verileriniz anlık olarak burada.</p>
-                  </div>
-                  {/* Decorative Elements inside the monitor */}
-                  <div style={{ position: 'absolute', bottom: '10%', right: '10%', width: '150px', height: '100px', background: 'var(--primary)', opacity: 0.1, borderRadius: '12px' }}></div>
+                  <img 
+                    src="/src/assets/hero.png" 
+                    alt="Shiftlap Dashboard" 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      opacity: 0.9
+                    }} 
+                  />
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    left: 0, 
+                    right: 0, 
+                    bottom: 0, 
+                    background: 'linear-gradient(to top, rgba(2, 6, 23, 0.4), transparent)',
+                    pointerEvents: 'none'
+                  }}></div>
                </div>
             </div>
           </motion.div>
@@ -238,7 +246,7 @@ const HomePage = () => {
             padding: '5rem', 
             textAlign: 'center', 
             color: 'white',
-            boxShadow: '0 30px 60px -12px rgba(99, 102, 241, 0.4)'
+            boxShadow: '0 30px 60px -12px rgba(255, 107, 0, 0.4)'
           }}>
             <h2 style={{ fontSize: '3rem', fontWeight: '900', marginBottom: '1.5rem' }}>Hemen Ücretsiz Başlayın</h2>
             <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
