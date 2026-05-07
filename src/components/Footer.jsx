@@ -1,142 +1,158 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, Code, Send, Briefcase, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 
-const Footer = () => {
+const footerLinks = [
+  { label: 'Ana Sayfa', to: '/' },
+  { label: 'PDKS Nedir?', to: '/pdks-nedir' },
+  { label: 'Özellikler', to: '/ozellikler' },
+  { label: 'Nasıl Çalışır?', to: '/nasil-calisir' },
+  { label: 'İletişim', to: '/iletisim' },
+];
+
+const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
+
+export default function Footer() {
   return (
-    <footer style={{ 
-      backgroundColor: 'rgba(0,0,0,0.2)', 
-      padding: '8rem 0 3rem 0', 
+    <footer style={{
       borderTop: '1px solid var(--glass-border)',
+      padding: '6rem 0 2.5rem',
       position: 'relative',
       overflow: 'hidden'
     }}>
+      {/* subtle top glow */}
+      <div style={{
+        position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
+        width: 600, height: 1,
+        background: 'linear-gradient(90deg, transparent, rgba(255,107,0,0.4), transparent)'
+      }} />
+
       <div className="container">
-        <div className="grid md:grid-cols-4" style={{ gap: '4rem' }}>
-          <div style={{ gridColumn: 'span 1' }}>
-            <Link to="/" className="flex items-center gap-2" style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ 
-                width: '36px', 
-                height: '36px', 
-                background: 'linear-gradient(135deg, var(--primary), var(--secondary))', 
-                borderRadius: '10px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                color: 'white' 
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: '3rem',
+          marginBottom: '5rem'
+        }}>
+          {/* Brand */}
+          <div style={{ gridColumn: 'span 2', maxWidth: 340 }}>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.25rem' }}>
+              <div style={{
+                width: 34, height: 34,
+                background: 'linear-gradient(135deg, #ff6b00, #f97316)',
+                borderRadius: 10,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', flexShrink: 0
               }}>
-                <Clock size={20} />
+                <Clock size={18} strokeWidth={2.5} />
               </div>
-              <span style={{ fontSize: '1.4rem', fontWeight: '900' }}>
+              <span style={{ fontSize: '1.3rem', fontWeight: 800, letterSpacing: '-0.04em' }}>
                 SHIFT<span style={{ color: 'var(--primary)' }}>LAP</span>
               </span>
             </Link>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '0.95rem', lineHeight: 1.8 }}>
-              Modern işletmeler için geliştirilmiş, bulut tabanlı ve yapay zeka destekli personel yönetim çözümü.
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.8, marginBottom: '1.75rem' }}>
+              Modern işletmeler için geliştirilmiş, bulut tabanlı personel yönetim çözümü. 
+              Donanımsız, hızlı ve güvenilir.
             </p>
-            <div className="flex" style={{ gap: '1.25rem' }}>
-              {[Code, Send, Briefcase].map((Icon, i) => (
-                <div key={i} style={{ 
-                  width: '40px', 
-                  height: '40px', 
-                  borderRadius: '12px', 
-                  background: 'var(--card-bg)', 
-                  border: '1px solid var(--glass-border)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: '0.3s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--primary)'}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--glass-border)'}
-                >
-                  <Icon size={18} />
-                </div>
+            <a
+              href={whatsappUrl}
+              className="btn-primary"
+              style={{ padding: '0.7rem 1.5rem', fontSize: '0.88rem' }}
+              target="_blank" rel="noopener noreferrer"
+            >
+              Ücretsiz Deneyin
+              <ArrowUpRight size={15} />
+            </a>
+          </div>
+
+          {/* Links */}
+          <div>
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-subtle)', marginBottom: '1.25rem' }}>
+              Platform
+            </p>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {footerLinks.map(link => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    style={{
+                      color: 'var(--text-muted)',
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                      transition: 'color 0.2s'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--text-main)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 style={{ fontWeight: '800', fontSize: '1.1rem', marginBottom: '2rem', color: 'var(--text-main)' }}>Platform</h4>
-            <ul className="flex flex-col" style={{ gap: '1rem' }}>
-              <li><Link to="/" style={{ color: 'var(--text-muted)', transition: '0.3s' }}>Ana Sayfa</Link></li>
-              <li><Link to="/pdks-nedir" style={{ color: 'var(--text-muted)' }}>PDKS Nedir?</Link></li>
-              <li><Link to="/ozellikler" style={{ color: 'var(--text-muted)' }}>Özellikler</Link></li>
-              <li><Link to="/nasil-calisir" style={{ color: 'var(--text-muted)' }}>Nasıl Çalışır?</Link></li>
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h4 style={{ fontWeight: '800', fontSize: '1.1rem', marginBottom: '2rem' }}>İletişim</h4>
-            <ul className="flex flex-col" style={{ gap: '1.25rem' }}>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                <Phone size={16} style={{ color: 'var(--primary)' }} /> 0536 475 3784
-              </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                <Mail size={16} style={{ color: 'var(--primary)' }} /> info@shiftlab.com
-              </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                <MapPin size={16} style={{ color: 'var(--primary)' }} /> Online Destek
-              </li>
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-subtle)', marginBottom: '1.25rem' }}>
+              İletişim
+            </p>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {[
+                { icon: Phone, text: '0536 475 3784', href: 'tel:+905364753784' },
+                { icon: Mail, text: 'info@shiftlab.com', href: 'mailto:info@shiftlab.com' },
+                { icon: MapPin, text: 'Online Destek', href: null },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                const inner = (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
+                    <Icon size={14} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+                    {item.text}
+                  </span>
+                );
+                return (
+                  <li key={i}>
+                    {item.href
+                      ? <a href={item.href} style={{ transition: 'opacity 0.2s' }}
+                          onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
+                          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                        >{inner}</a>
+                      : inner
+                    }
+                  </li>
+                );
+              })}
             </ul>
-          </div>
-
-          <div>
-            <h4 style={{ fontWeight: '800', fontSize: '1.1rem', marginBottom: '2rem' }}>Bülten</h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>En yeni özelliklerden ve güncellemelerden haberdar olun.</p>
-            <div style={{ position: 'relative' }}>
-              <input 
-                type="email" 
-                placeholder="E-posta adresiniz"
-                style={{ 
-                  width: '100%', 
-                  padding: '1rem', 
-                  paddingRight: '3rem',
-                  borderRadius: '14px', 
-                  border: '1px solid var(--glass-border)', 
-                  backgroundColor: 'rgba(255,255,255,0.03)',
-                  color: 'white',
-                  outline: 'none'
-                }}
-              />
-              <button style={{ 
-                position: 'absolute', 
-                right: '12px', 
-                top: '50%', 
-                transform: 'translateY(-50%)', 
-                background: 'none', 
-                color: 'var(--primary)',
-                cursor: 'pointer'
-              }}>
-                <Send size={20} />
-              </button>
-            </div>
           </div>
         </div>
 
-        <div style={{ 
-          marginTop: '6rem', 
-          paddingTop: '2rem', 
-          borderTop: '1px solid var(--glass-border)', 
-          display: 'flex', 
+        {/* Bottom bar */}
+        <div style={{
+          paddingTop: '2rem',
+          borderTop: '1px solid var(--glass-border)',
+          display: 'flex',
           flexWrap: 'wrap',
-          justifyContent: 'space-between', 
+          justifyContent: 'space-between',
           alignItems: 'center',
-          fontSize: '0.85rem', 
-          color: 'var(--text-muted)',
-          gap: '1.5rem'
+          gap: '1rem'
         }}>
-          <p>© 2024 Shiftlap. Tüm hakları saklıdır. Geleceğin iş gücü yönetimi.</p>
-          <div className="flex" style={{ gap: '2.5rem' }}>
-            <a href="#" style={{ transition: '0.3s' }}>Gizlilik Politikası</a>
-            <a href="#" style={{ transition: '0.3s' }}>Kullanım Şartları</a>
-            <a href="#" style={{ transition: '0.3s' }}>KVKK</a>
+          <p style={{ color: 'var(--text-subtle)', fontSize: '0.82rem' }}>
+            © {new Date().getFullYear()} Shiftlap. Tüm hakları saklıdır.
+          </p>
+          <div style={{ display: 'flex', gap: '2rem' }}>
+            {['Gizlilik Politikası', 'Kullanım Şartları', 'KVKK'].map(item => (
+              <a
+                key={item}
+                href="#"
+                style={{ color: 'var(--text-subtle)', fontSize: '0.82rem', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-subtle)'}
+              >
+                {item}
+              </a>
+            ))}
           </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
