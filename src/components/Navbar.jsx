@@ -107,7 +107,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={scrolled ? 'nav-scrolled' : 'nav-transparent'}>
+      <nav className={scrolled ? 'nav-scrolled' : 'nav-transparent'} style={{ zIndex: 100 }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
           {/* Logo */}
@@ -254,65 +254,76 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               style={{
                 position: 'fixed', inset: 0,
-                background: 'rgba(0,0,0,0.55)',
+                background: 'rgba(0,0,0,0.6)',
                 backdropFilter: 'blur(6px)',
-                zIndex: 998,
+                WebkitBackdropFilter: 'blur(6px)',
+                zIndex: 200,
               }}
             />
 
             {/* Drawer panel */}
             <motion.div
               key="drawer"
-              initial={{ x: '100%', opacity: 0.5 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '100%', opacity: 0 }}
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 280 }}
               style={{
                 position: 'fixed', top: 0, right: 0, bottom: 0,
                 width: 'min(300px, 85vw)',
                 background: 'var(--background)',
                 borderLeft: '1px solid var(--glass-border)',
-                zIndex: 999,
+                zIndex: 300,
                 display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden',
+                boxShadow: '-8px 0 40px rgba(0,0,0,0.4)',
               }}
             >
-              {/* Drawer header */}
+              {/* Drawer header — sadece kapat butonu ve tema toggle */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '1.25rem 1.5rem',
+                padding: '1rem 1.25rem',
                 borderBottom: '1px solid var(--glass-border)',
+                minHeight: 60,
               }}>
-                <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} onClick={() => setIsOpen(false)}>
-                  <div style={{
-                    width: 30, height: 30,
-                    background: 'linear-gradient(135deg, #ff6b00, #f97316)',
-                    borderRadius: 8,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: '#fff',
-                  }}>
-                    <Clock size={16} strokeWidth={2.5} />
-                  </div>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.04em' }}>
-                    SHIFT<span style={{ color: 'var(--primary)' }}>LAP</span>
-                  </span>
-                </Link>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  style={{
-                    width: 34, height: 34, borderRadius: 9,
-                    border: '1px solid var(--glass-border)',
-                    background: 'transparent',
-                    color: 'var(--text-muted)',
-                    cursor: 'pointer',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}
-                >
-                  <HamburgerIcon isOpen={true} />
-                </button>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Menü</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {/* Tema toggle */}
+                  <button
+                    onClick={toggleTheme}
+                    style={{
+                      width: 34, height: 34, borderRadius: 9,
+                      border: '1px solid var(--glass-border)',
+                      background: 'var(--card-bg)',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}
+                    title={isDark ? 'Açık Tema' : 'Koyu Tema'}
+                  >
+                    <ThemeIcon isDark={isDark} />
+                  </button>
+                  {/* Kapat */}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    style={{
+                      width: 34, height: 34, borderRadius: 9,
+                      border: '1px solid var(--glass-border)',
+                      background: 'var(--card-bg)',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '1.25rem',
+                      lineHeight: 1,
+                    }}
+                    aria-label="Menüyü kapat"
+                  >
+                    <HamburgerIcon isOpen={true} />
+                  </button>
+                </div>
               </div>
 
               {/* Links */}
