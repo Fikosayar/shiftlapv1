@@ -11,6 +11,7 @@ import {
   Clock
 } from 'lucide-react';
 import dashboardImg from '../assets/dashboard.png';
+import { useSEO } from '../hooks/useSEO';
 
 const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
 
@@ -55,6 +56,12 @@ const stats = [
 ];
 
 export default function HomePage() {
+  useSEO({
+    title: 'Shiftlap | Bulut Tabanlı PDKS ve Personel Takip Sistemi',
+    description: 'QR kod ve GPS ile personel devam takibini modernleştirin. Donanım gerektirmez, 14 gün ücretsiz deneyin.',
+    canonical: 'https://shiftlap.com/',
+  });
+
   return (
     <div style={{ position: 'relative', overflow: 'hidden' }}>
       {/* ambient blobs */}

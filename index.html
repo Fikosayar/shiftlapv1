@@ -2,15 +2,116 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shiftlap | Yeni Nesil PDKS ve Personel Takip Sistemi</title>
-    <meta name="description" content="Shiftlap, işletmeler için bulut tabanlı, mobil uyumlu ve modern bir personel devam kontrol sistemidir (PDKS). QR kod ile giriş-çıkış takibi yapın." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Primary SEO -->
+    <title>Shiftlap | Bulut Tabanlı PDKS ve Personel Takip Sistemi</title>
+    <meta name="description" content="Shiftlap ile QR kod, GPS doğrulama ve akıllı raporlama ile personel devam takibini modernleştirin. Donanım gerektirmez, 14 gün ücretsiz deneyin." />
+    <meta name="keywords" content="PDKS, personel takip sistemi, QR kod giriş, mesai takip, personel devam kontrol, vardiya yönetimi, bulut PDKS, dijital puantaj, Shiftlap" />
+    <meta name="author" content="Shiftlap" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://shiftlap.com/" />
+
+    <!-- Open Graph (Facebook / LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shiftlap" />
+    <meta property="og:title" content="Shiftlap | Bulut Tabanlı PDKS ve Personel Takip Sistemi" />
+    <meta property="og:description" content="QR kod ve GPS ile personel devam takibini modernleştirin. Donanım gerektirmez, kurulum dakikalar içinde tamamlanır." />
+    <meta property="og:url" content="https://shiftlap.com/" />
+    <meta property="og:image" content="https://shiftlap.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="tr_TR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Shiftlap | Bulut Tabanlı PDKS ve Personel Takip Sistemi" />
+    <meta name="twitter:description" content="QR kod ve GPS ile personel devam takibini modernleştirin. 14 gün ücretsiz deneyin." />
+    <meta name="twitter:image" content="https://shiftlap.com/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#ff6b00" />
+
+    <!-- JSON-LD Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Shiftlap",
+      "description": "Bulut tabanlı, QR kod destekli personel devam kontrol sistemi (PDKS). Donanım gerektirmez.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, iOS, Android",
+      "url": "https://shiftlap.com",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TRY",
+        "description": "14 günlük ücretsiz deneme"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "48"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Shiftlap",
+        "url": "https://shiftlap.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+90-536-475-3784",
+          "contactType": "customer service",
+          "availableLanguage": "Turkish"
+        }
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "PDKS nedir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PDKS (Personel Devam Kontrol Sistemi), işletmelerin çalışanlarının giriş-çıkış saatlerini, devamsızlıklarını ve mesailerini dijital olarak takip etmek için kullandığı sistemdir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Shiftlap için donanım satın almam gerekiyor mu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hayır. Shiftlap tamamen yazılım tabanlı çalışır. Personelleriniz kendi akıllı telefonları ile QR kodu okutarak giriş yapabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Shiftlap'ı ücretsiz deneyebilir miyim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet. Kredi kartı bilgisi gerekmeksizin 14 gün boyunca tüm özellikleri ücretsiz kullanabilirsiniz."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
-  <body>
+  <body class="dark">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

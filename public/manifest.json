@@ -1,0 +1,17 @@
+{
+  "name": "Shiftlap",
+  "short_name": "Shiftlap",
+  "description": "Bulut tabanlı QR kod destekli personel devam kontrol sistemi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08090f",
+  "theme_color": "#ff6b00",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

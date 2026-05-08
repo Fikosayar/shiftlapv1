@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { UserPlus, Smartphone, QrCode, LineChart, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const steps = [
   {
@@ -30,7 +31,13 @@ const steps = [
 ];
 
 const HowItWorks = () => {
+  useSEO({
+    title: "Shiftlap Nasil Calisir? | 4 Adimda PDKS Kurulumu",
+    description: "Shiftlap ile baslamak cok kolay. Hesap acin, personeli ekleyin, QR kodu okutun ve raporlarinizi aninda alin.",
+    canonical: 'https://shiftlap.com/nasil-calisir',
+  });
   const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
+
 
   return (
     <motion.div

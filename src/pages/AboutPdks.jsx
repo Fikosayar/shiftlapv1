@@ -1,8 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, AlertCircle, TrendingUp, ArrowRight, Zap, Shield, Globe } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const AboutPdks = () => {
+  useSEO({
+    title: 'PDKS Nedir? | Shiftlap',
+    description: 'Personel Devam Kontrol Sistemi nedir, nasıl çalışır? Shiftlap ile geleneksel PDKS farkını keşfedin.',
+    canonical: 'https://shiftlap.com/pdks-nedir',
+  });
   const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
 
   const stats = [

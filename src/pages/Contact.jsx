@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, MessageCircle, Clock, CheckCircle2 } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const Contact = () => {
+  useSEO({
+    title: 'Iletisim | Shiftlap PDKS',
+    description: '0536 475 3784 numarali telefon veya info@shiftlab.com e-postasi ile bize ulasin. WhatsApp anlik destek icin hazir.',
+    canonical: 'https://shiftlap.com/iletisim',
+  });
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);
 

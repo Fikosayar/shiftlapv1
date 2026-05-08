@@ -12,6 +12,7 @@ import {
   Layers,
   ArrowRight
 } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const featuresList = [
   {
@@ -84,6 +85,11 @@ const cardVariants = {
 };
 
 const Features = () => {
+  useSEO({
+    title: 'Shiftlap Özellikleri | QR Kod, GPS, Raporlama ve Daha Fazlası',
+    description: 'Dinamik QR kod, GPS doğrulama, vardiya yönetimi, akıllı raporlama ve daha 9 özellik. Tümü tek platformda.',
+    canonical: 'https://shiftlap.com/ozellikler',
+  });
   const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
 
   return (
