@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, MessageCircle } from 'lucide-react';
+import { Clock, MessageCircle, Sun, Moon, X } from 'lucide-react';
 import { t } from '../i18n/tr';
 
 const navLinks = [
@@ -12,102 +12,79 @@ const navLinks = [
   { name: t.nav.contact,    path: '/iletisim' },
 ];
 
-/* ── Theme toggle icon ── */
-function ThemeIcon({ isDark }) {
-  return isDark ? (
-    /* Sun */
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="5"/>
-      <line x1="12" y1="1" x2="12" y2="3"/>
-      <line x1="12" y1="21" x2="12" y2="23"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-      <line x1="1" y1="12" x2="3" y2="12"/>
-      <line x1="21" y1="12" x2="23" y2="12"/>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-    </svg>
-  ) : (
-    /* Moon */
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
-    </svg>
-  );
-}
-
-/* ── Animated Hamburger ── */
-function HamburgerIcon({ isOpen }) {
-  const barStyle = {
+/* ─── Animated hamburger bars ─── */
+function Hamburger({ open }) {
+  const bar = (transform) => ({
     display: 'block',
-    width: '22px',
-    height: '2px',
-    borderRadius: '2px',
+    width: 20,
+    height: 2,
+    borderRadius: 2,
     background: 'currentColor',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    transformOrigin: 'center',
-  };
+    transition: 'transform 0.28s ease, opacity 0.28s ease',
+    ...transform,
+  });
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center', justifyContent: 'center' }}>
-      <span style={{
-        ...barStyle,
-        transform: isOpen ? 'translateY(7px) rotate(45deg)' : 'none',
-      }} />
-      <span style={{
-        ...barStyle,
-        opacity: isOpen ? 0 : 1,
-        transform: isOpen ? 'scaleX(0)' : 'none',
-      }} />
-      <span style={{
-        ...barStyle,
-        transform: isOpen ? 'translateY(-7px) rotate(-45deg)' : 'none',
-      }} />
-    </div>
+    <span style={{ display: 'flex', flexDirection: 'column', gap: 5, pointerEvents: 'none' }}>
+      <span style={bar({ transform: open ? 'translateY(7px) rotate(45deg)' : 'none' })} />
+      <span style={bar({ opacity: open ? 0 : 1 })} />
+      <span style={bar({ transform: open ? 'translateY(-7px) rotate(-45deg)' : 'none' })} />
+    </span>
   );
 }
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen]       = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [dark, setDark]       = useState(true);
   const location = useLocation();
 
+  /* init theme + scroll listener */
   useEffect(() => {
     const saved = localStorage.getItem('theme') || 'dark';
-    setIsDark(saved === 'dark');
+    setDark(saved === 'dark');
     document.body.className = saved;
 
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setIsOpen(false); }, [location.pathname]);
+  /* close drawer on route change */
+  useEffect(() => setOpen(false), [location.pathname]);
+
+  /* lock body scroll when drawer is open */
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
 
   const toggleTheme = useCallback(() => {
-    const next = isDark ? 'light' : 'dark';
-    setIsDark(!isDark);
+    const next = dark ? 'light' : 'dark';
+    setDark(!dark);
     document.body.className = next;
     localStorage.setItem('theme', next);
-  }, [isDark]);
+  }, [dark]);
 
-  const iconBtnStyle = {
-    width: 36,
-    height: 36,
+  /* ─── shared icon-button style ─── */
+  const iconBtn = {
+    width: 36, height: 36,
     borderRadius: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
     border: '1px solid var(--glass-border)',
     background: 'var(--card-bg)',
     color: 'var(--text-muted)',
-    transition: 'all 0.2s ease',
+    cursor: 'pointer',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
     flexShrink: 0,
+    transition: 'border-color 0.2s, color 0.2s',
   };
 
   return (
     <>
-      <nav className={scrolled ? 'nav-scrolled' : 'nav-transparent'} style={{ zIndex: 100 }}>
+      {/* ═══════════════ NAVBAR ═══════════════ */}
+      <nav
+        className={scrolled ? 'nav-scrolled' : 'nav-transparent'}
+        style={{ zIndex: 100 }}
+      >
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
           {/* Logo */}
@@ -118,31 +95,28 @@ export default function Navbar() {
               borderRadius: 10,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               color: '#fff',
-              boxShadow: '0 4px 14px -2px rgba(255,107,0,0.5)',
+              boxShadow: '0 4px 14px -2px rgba(255,107,0,0.45)',
             }}>
               <Clock size={19} strokeWidth={2.5} />
             </div>
-            <span style={{ fontSize: '1.4rem', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 1 }}>
+            <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 1 }}>
               SHIFT<span style={{ color: 'var(--primary)' }}>LAP</span>
             </span>
           </Link>
 
-          {/* Desktop links */}
+          {/* ── Desktop links ── */}
           <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '1.75rem' }}>
             {navLinks.map(link => {
               const active = location.pathname === link.path;
               return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  style={{
-                    fontSize: '0.875rem',
-                    fontWeight: active ? 700 : 500,
-                    color: active ? 'var(--primary)' : 'var(--text-muted)',
-                    transition: 'color 0.2s',
-                    position: 'relative',
-                    paddingBottom: '2px',
-                  }}
+                <Link key={link.path} to={link.path} style={{
+                  fontSize: '0.875rem',
+                  fontWeight: active ? 700 : 500,
+                  color: active ? 'var(--primary)' : 'var(--text-muted)',
+                  transition: 'color 0.2s',
+                  position: 'relative',
+                  paddingBottom: 2,
+                }}
                   onMouseEnter={e => { if (!active) e.currentTarget.style.color = 'var(--text-main)'; }}
                   onMouseLeave={e => { if (!active) e.currentTarget.style.color = 'var(--text-muted)'; }}
                 >
@@ -157,21 +131,17 @@ export default function Navbar() {
               );
             })}
 
-            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              style={iconBtnStyle}
-              title={isDark ? 'Açık Temaya Geç' : 'Koyu Temaya Geç'}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,107,0,0.35)'; e.currentTarget.style.color = 'var(--text-main)'; }}
+              style={iconBtn}
+              title={dark ? 'Açık Tema' : 'Koyu Tema'}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,107,0,0.4)'; e.currentTarget.style.color = 'var(--text-main)'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--glass-border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
             >
-              <ThemeIcon isDark={isDark} />
+              {dark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
 
-            {/* CTA */}
-            <a
-              href={t.site.whatsapp}
-              className="btn-primary"
+            <a href={t.site.whatsapp} className="btn-primary"
               style={{ padding: '0.6rem 1.3rem', fontSize: '0.85rem', gap: '0.4rem' }}
               target="_blank" rel="noopener noreferrer"
             >
@@ -180,211 +150,185 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Mobile controls */}
-          <div className="mobile-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            {/* Theme toggle — pill style */}
-            <button
-              onClick={toggleTheme}
-              title={isDark ? 'Açık Tema' : 'Koyu Tema'}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '0 12px',
-                height: 36,
-                borderRadius: 50,
-                border: '1px solid var(--glass-border)',
-                background: 'var(--card-bg)',
-                color: 'var(--text-muted)',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                backdropFilter: 'blur(8px)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,107,0,0.3)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--glass-border)'}
-            >
-              <ThemeIcon isDark={isDark} />
-              <span style={{ display: 'none' /* shown via CSS on wider mobile */ }}>
-                {isDark ? 'Aydınlık' : 'Karanlık'}
-              </span>
+          {/* ── Mobile controls ── */}
+          <div className="mobile-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {/* Tema toggle — pill */}
+            <button onClick={toggleTheme} title={dark ? 'Açık Tema' : 'Koyu Tema'} style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              height: 36, padding: '0 12px',
+              borderRadius: 50,
+              border: '1px solid var(--glass-border)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-muted)',
+              cursor: 'pointer',
+              backdropFilter: 'blur(8px)',
+            }}>
+              {dark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
 
             {/* Hamburger */}
             <button
-              onClick={() => setIsOpen(v => !v)}
-              aria-label={isOpen ? 'Menüyü kapat' : 'Menüyü aç'}
-              aria-expanded={isOpen}
+              onClick={() => setOpen(v => !v)}
+              aria-label={open ? 'Menüyü kapat' : 'Menüyü aç'}
+              aria-expanded={open}
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 11,
-                border: '1px solid var(--glass-border)',
-                background: isOpen
-                  ? 'rgba(255,107,0,0.1)'
-                  : 'var(--card-bg)',
-                color: isOpen ? 'var(--primary)' : 'var(--text-main)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.25s',
+                ...iconBtn,
+                width: 40, height: 40, borderRadius: 11,
+                background: open ? 'rgba(255,107,0,0.1)' : 'var(--card-bg)',
+                color: open ? 'var(--primary)' : 'var(--text-main)',
                 backdropFilter: 'blur(8px)',
-                flexShrink: 0,
               }}
             >
-              <HamburgerIcon isOpen={isOpen} />
+              <Hamburger open={open} />
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile drawer */}
+      {/* ═══════════════ MOBILE DRAWER ═══════════════ */}
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <>
-            {/* Overlay */}
+            {/* Overlay — z=200, covers everything including nav (z=100) */}
             <motion.div
               key="overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setIsOpen(false)}
+              transition={{ duration: 0.22 }}
+              onClick={() => setOpen(false)}
               style={{
                 position: 'fixed', inset: 0,
-                background: 'rgba(0,0,0,0.6)',
-                backdropFilter: 'blur(6px)',
-                WebkitBackdropFilter: 'blur(6px)',
+                background: 'rgba(0,0,0,0.65)',
+                backdropFilter: 'blur(5px)',
+                WebkitBackdropFilter: 'blur(5px)',
                 zIndex: 200,
               }}
             />
 
-            {/* Drawer panel */}
-            <motion.div
+            {/* Drawer — z=300, above overlay */}
+            <motion.aside
               key="drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigasyon Menüsü"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 260 }}
               style={{
+                /* Stacking */
                 position: 'fixed', top: 0, right: 0, bottom: 0,
-                width: 'min(300px, 85vw)',
-                background: 'var(--background)',
-                borderLeft: '1px solid var(--glass-border)',
                 zIndex: 300,
+                /* Size */
+                width: 'min(280px, 82vw)',
+                /* Layout */
                 display: 'flex',
                 flexDirection: 'column',
+                /* Visuals */
+                background: 'var(--background)',
+                borderLeft: '1px solid var(--glass-border)',
+                boxShadow: '-12px 0 48px rgba(0,0,0,0.5)',
                 overflow: 'hidden',
-                boxShadow: '-8px 0 40px rgba(0,0,0,0.4)',
               }}
             >
-              {/* Drawer header — sadece kapat butonu ve tema toggle */}
+              {/* Header */}
               <div style={{
+                flexShrink: 0,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '1rem 1.25rem',
+                padding: '0 1.25rem',
+                height: 60,
                 borderBottom: '1px solid var(--glass-border)',
-                minHeight: 60,
               }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Menü</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  {/* Tema toggle */}
-                  <button
-                    onClick={toggleTheme}
-                    style={{
-                      width: 34, height: 34, borderRadius: 9,
-                      border: '1px solid var(--glass-border)',
-                      background: 'var(--card-bg)',
-                      color: 'var(--text-muted)',
-                      cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}
-                    title={isDark ? 'Açık Tema' : 'Koyu Tema'}
-                  >
-                    <ThemeIcon isDark={isDark} />
+                <span style={{
+                  fontSize: '0.7rem', fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.12em',
+                  color: 'var(--text-subtle)',
+                }}>
+                  Menü
+                </span>
+                <div style={{ display: 'flex', gap: '0.4rem' }}>
+                  {/* Tema */}
+                  <button onClick={toggleTheme} title={dark ? 'Açık Tema' : 'Koyu Tema'} style={{
+                    ...iconBtn,
+                    width: 34, height: 34, borderRadius: 9,
+                  }}>
+                    {dark ? <Sun size={15} /> : <Moon size={15} />}
                   </button>
                   {/* Kapat */}
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    style={{
-                      width: 34, height: 34, borderRadius: 9,
-                      border: '1px solid var(--glass-border)',
-                      background: 'var(--card-bg)',
-                      color: 'var(--text-muted)',
-                      cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '1.25rem',
-                      lineHeight: 1,
-                    }}
-                    aria-label="Menüyü kapat"
-                  >
-                    <HamburgerIcon isOpen={true} />
+                  <button onClick={() => setOpen(false)} aria-label="Kapat" style={{
+                    ...iconBtn,
+                    width: 34, height: 34, borderRadius: 9,
+                  }}>
+                    <X size={17} />
                   </button>
                 </div>
               </div>
 
-              {/* Links */}
-              <nav style={{ padding: '1rem 1rem', flex: 1, overflow: 'auto' }}>
-                {navLinks.map((link, i) => {
+              {/* Links — scrollable, fills remaining space */}
+              <nav style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 0.75rem 0' }}>
+                {navLinks.map(link => {
                   const active = location.pathname === link.path;
                   return (
-                    <motion.div
+                    <Link
                       key={link.path}
-                      initial={{ opacity: 0, x: 16 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
+                      to={link.path}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0.9rem 1rem',
+                        marginBottom: 2,
+                        borderRadius: 12,
+                        fontWeight: active ? 700 : 500,
+                        fontSize: '0.95rem',
+                        color: active ? 'var(--primary)' : 'var(--text-main)',
+                        background: active ? 'rgba(255,107,0,0.08)' : 'transparent',
+                        transition: 'background 0.15s',
+                        textDecoration: 'none',
+                      }}
+                      onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'var(--surface)'; }}
+                      onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
                     >
-                      <Link
-                        to={link.path}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.85rem 1rem',
-                          borderRadius: 12,
-                          fontWeight: active ? 700 : 500,
-                          fontSize: '0.95rem',
-                          color: active ? 'var(--primary)' : 'var(--text-main)',
-                          background: active ? 'rgba(255,107,0,0.08)' : 'transparent',
-                          marginBottom: '2px',
-                          transition: 'all 0.2s',
-                        }}
-                        onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'var(--surface)'; }}
-                        onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
-                      >
-                        {link.name}
-                        {active && (
-                          <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--primary)', display: 'inline-block' }} />
-                        )}
-                      </Link>
-                    </motion.div>
+                      {link.name}
+                      {active && (
+                        <span style={{
+                          width: 6, height: 6, borderRadius: '50%',
+                          background: 'var(--primary)', flexShrink: 0,
+                        }} />
+                      )}
+                    </Link>
                   );
                 })}
               </nav>
 
-              {/* Drawer footer */}
-              <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid var(--glass-border)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {/* Footer — pinned to bottom */}
+              <div style={{
+                flexShrink: 0,
+                padding: '1rem 1.25rem',
+                borderTop: '1px solid var(--glass-border)',
+              }}>
                 <a
                   href={t.site.whatsapp}
                   className="btn-primary"
-                  style={{ justifyContent: 'center', padding: '0.9rem' }}
+                  onClick={() => setOpen(false)}
                   target="_blank" rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
+                  style={{ width: '100%', justifyContent: 'center', padding: '0.9rem' }}
                 >
                   <MessageCircle size={16} />
                   {t.nav.cta}
                 </a>
               </div>
-            </motion.div>
+            </motion.aside>
           </>
         )}
       </AnimatePresence>
 
+      {/* Responsive breakpoints */}
       <style>{`
-        @media (max-width: 960px)  { .desktop-nav { display: none !important; } }
+        @media (max-width: 960px)  { .desktop-nav    { display: none !important; } }
         @media (min-width: 961px)  { .mobile-controls { display: none !important; } }
       `}</style>
     </>
