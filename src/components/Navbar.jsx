@@ -217,29 +217,26 @@ export default function Navbar() {
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 260 }}
               style={{
-                /* Stacking */
-                position: 'fixed', top: 0, right: 0, bottom: 0,
-                zIndex: 300,
-                /* Size */
+                position: 'fixed',
+                top: 0, right: 0,
                 width: 'min(280px, 82vw)',
-                /* Layout */
+                height: '100dvh',        /* explicit full height */
+                zIndex: 300,
                 display: 'flex',
                 flexDirection: 'column',
-                /* Visuals */
                 background: 'var(--background)',
                 borderLeft: '1px solid var(--glass-border)',
                 boxShadow: '-12px 0 48px rgba(0,0,0,0.5)',
                 overflow: 'hidden',
               }}
             >
-              {/* Header */}
+              {/* Header — fixed 60px */}
               <div style={{
-                flexShrink: 0,
+                flex: '0 0 60px',       /* never grow, never shrink */
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '0 1.25rem',
-                height: 60,
                 borderBottom: '1px solid var(--glass-border)',
               }}>
                 <span style={{
@@ -250,25 +247,26 @@ export default function Navbar() {
                   Menü
                 </span>
                 <div style={{ display: 'flex', gap: '0.4rem' }}>
-                  {/* Tema */}
                   <button onClick={toggleTheme} title={dark ? 'Açık Tema' : 'Koyu Tema'} style={{
-                    ...iconBtn,
-                    width: 34, height: 34, borderRadius: 9,
+                    ...iconBtn, width: 34, height: 34, borderRadius: 9,
                   }}>
                     {dark ? <Sun size={15} /> : <Moon size={15} />}
                   </button>
-                  {/* Kapat */}
                   <button onClick={() => setOpen(false)} aria-label="Kapat" style={{
-                    ...iconBtn,
-                    width: 34, height: 34, borderRadius: 9,
+                    ...iconBtn, width: 34, height: 34, borderRadius: 9,
                   }}>
                     <X size={17} />
                   </button>
                 </div>
               </div>
 
-              {/* Links — scrollable, fills remaining space */}
-              <nav style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 0.75rem 0' }}>
+              {/* Links — takes ALL remaining space, scrollable */}
+              <nav style={{
+                flex: '1 1 0',          /* grow + shrink from 0 basis */
+                minHeight: 0,           /* KEY: allows shrinking below content height */
+                overflowY: 'auto',
+                padding: '0.75rem',
+              }}>
                 {navLinks.map(link => {
                   const active = location.pathname === link.path;
                   return (
@@ -304,9 +302,9 @@ export default function Navbar() {
                 })}
               </nav>
 
-              {/* Footer — pinned to bottom */}
+              {/* Footer — fixed at bottom */}
               <div style={{
-                flexShrink: 0,
+                flex: '0 0 auto',       /* never grow or shrink */
                 padding: '1rem 1.25rem',
                 borderTop: '1px solid var(--glass-border)',
               }}>
