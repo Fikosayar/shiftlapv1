@@ -82,7 +82,7 @@ export default function Navbar() {
     <>
       {/* ═══════════════ NAVBAR ═══════════════ */}
       <nav
-        className={scrolled ? 'nav-scrolled' : 'nav-transparent'}
+        className={`main-nav ${scrolled ? 'nav-scrolled' : 'nav-transparent'}`}
         style={{ zIndex: 100 }}
       >
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

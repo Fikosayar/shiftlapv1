@@ -203,7 +203,7 @@ h1, h2, h3, h4 {
 }
 
 /* ─── Navbar ─── */
-nav {
+.main-nav {
   position: fixed;
   top: 0;
   width: 100%;
@@ -211,7 +211,7 @@ nav {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-scrolled {
+.main-nav.nav-scrolled {
   background: var(--nav-bg);
   backdrop-filter: blur(16px) saturate(1.5);
   -webkit-backdrop-filter: blur(16px) saturate(1.5);
@@ -219,7 +219,7 @@ nav {
   border-bottom: 1px solid var(--glass-border);
 }
 
-.nav-transparent {
+.main-nav.nav-transparent {
   padding: 1.5rem 0;
 }
 
