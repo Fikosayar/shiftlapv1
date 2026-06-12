@@ -1,18 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, MessageCircle, Sun, Moon, X } from 'lucide-react';
-import { t } from '../i18n/tr';
-
-const navLinks = [
-  { name: t.nav.home,       path: '/' },
-  { name: t.nav.about,      path: '/pdks-nedir' },
-  { name: t.nav.features,   path: '/ozellikler' },
-  { name: t.nav.howItWorks, path: '/nasil-calisir' },
-  { name: 'Fiyatlar',       path: '/fiyatlandirma' },
-  { name: 'Blog',           path: '/blog' },
-  { name: t.nav.contact,    path: '/iletisim' },
-];
+import { Clock, MessageCircle, Sun, Moon, X, Globe } from 'lucide-react';
+import { useLanguage } from '../i18n';
 
 /* ─── Animated hamburger bars ─── */
 function Hamburger({ open }) {
@@ -39,6 +29,17 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [dark, setDark]       = useState(true);
   const location = useLocation();
+  const { lang, toggleLang, t } = useLanguage();
+
+  const navLinks = [
+    { name: t.nav.home,       path: '/' },
+    { name: t.nav.about,      path: '/pdks-nedir' },
+    { name: t.nav.features,   path: '/ozellikler' },
+    { name: t.nav.howItWorks, path: '/nasil-calisir' },
+    { name: lang === 'tr' ? 'Fiyatlar' : 'Pricing', path: '/fiyatlandirma' },
+    { name: 'Blog',           path: '/blog' },
+    { name: t.nav.contact,    path: '/iletisim' },
+  ];
 
   /* init theme + scroll listener */
   useEffect(() => {
@@ -136,11 +137,24 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               style={iconBtn}
-              title={dark ? 'Açık Tema' : 'Koyu Tema'}
+              title={dark ? (lang === 'tr' ? 'Açık Tema' : 'Light Mode') : (lang === 'tr' ? 'Koyu Tema' : 'Dark Mode')}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,107,0,0.4)'; e.currentTarget.style.color = 'var(--text-main)'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--glass-border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
             >
               {dark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
+            {/* Language toggle */}
+            <button
+              onClick={toggleLang}
+              style={iconBtn}
+              title={lang === 'tr' ? 'Switch to English' : 'Türkçeye Geç'}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,107,0,0.4)'; e.currentTarget.style.color = 'var(--text-main)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--glass-border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
+            >
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: '0.02em' }}>
+                {lang === 'tr' ? 'EN' : 'TR'}
+              </span>
             </button>
 
             <a href={t.site.whatsapp} className="btn-primary"
@@ -154,8 +168,23 @@ export default function Navbar() {
 
           {/* ── Mobile controls ── */}
           <div className="mobile-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {/* Tema toggle — pill */}
-            <button onClick={toggleTheme} title={dark ? 'Açık Tema' : 'Koyu Tema'} style={{
+            {/* Language toggle */}
+            <button onClick={toggleLang} style={{
+              height: 36, padding: '0 10px',
+              borderRadius: 50,
+              border: '1px solid var(--glass-border)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-muted)',
+              cursor: 'pointer',
+              fontSize: '0.72rem',
+              fontWeight: 800,
+              backdropFilter: 'blur(8px)',
+            }}>
+              {lang === 'tr' ? 'EN' : 'TR'}
+            </button>
+
+            {/* Tema toggle */}
+            <button onClick={toggleTheme} title={dark ? 'Light' : 'Dark'} style={{
               display: 'flex', alignItems: 'center', gap: 6,
               height: 36, padding: '0 12px',
               borderRadius: 50,
@@ -246,10 +275,17 @@ export default function Navbar() {
                   textTransform: 'uppercase', letterSpacing: '0.12em',
                   color: 'var(--text-subtle)',
                 }}>
-                  Menü
+                  {lang === 'tr' ? 'Menü' : 'Menu'}
                 </span>
                 <div style={{ display: 'flex', gap: '0.4rem' }}>
-                  <button onClick={toggleTheme} title={dark ? 'Açık Tema' : 'Koyu Tema'} style={{
+                  {/* Lang toggle */}
+                  <button onClick={toggleLang} style={{
+                    ...iconBtn, width: 34, height: 34, borderRadius: 9,
+                    fontSize: '0.68rem', fontWeight: 800,
+                  }}>
+                    {lang === 'tr' ? 'EN' : 'TR'}
+                  </button>
+                  <button onClick={toggleTheme} title={dark ? 'Light' : 'Dark'} style={{
                     ...iconBtn, width: 34, height: 34, borderRadius: 9,
                   }}>
                     {dark ? <Sun size={15} /> : <Moon size={15} />}

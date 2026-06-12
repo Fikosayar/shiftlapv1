@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { LanguageProvider } from './i18n';
 
 // Components
 import Navbar from './components/Navbar';
@@ -18,6 +19,7 @@ import BlogPost from './pages/BlogPost';
 
 function App() {
   return (
+    <LanguageProvider>
     <Router>
       <div className="app-wrapper">
         <Navbar />
@@ -38,6 +40,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </LanguageProvider>
   );
 }
 
