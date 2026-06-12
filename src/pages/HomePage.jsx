@@ -272,6 +272,122 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Testimonials ── */}
+      <section style={{ padding: '4rem 0 8rem', position: 'relative', zIndex: 1 }}>
+        <div className="container">
+          <div className="text-center" style={{ marginBottom: '4rem' }}>
+            <motion.div {...fadeUp(0)}>
+              <div className="badge" style={{ display: 'inline-flex' }}>Müşteri Deneyimleri</div>
+            </motion.div>
+            <motion.h2 {...fadeUp(0.1)} style={{ fontSize: 'clamp(1.75rem, 3vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.025em' }}>
+              Kullanıcılarımız Ne Diyor?
+            </motion.h2>
+          </div>
+
+          <div className="grid md:grid-cols-3" style={{ gap: '1.5rem', maxWidth: 1100, margin: '0 auto' }}>
+            {[
+              {
+                quote: 'Shiftlap öncesinde Excel tablolarıyla uğraşıyorduk. Şimdi ay sonu puantajı hazırlamak 5 dakikamızı alıyor. Keşke daha önce geçseydik.',
+                name: 'Mehmet Y.',
+                role: 'İK Müdürü',
+                company: 'Üretim Sektörü',
+                stars: 5,
+                color: '#ff6b00',
+              },
+              {
+                quote: 'Donanım maliyeti sıfır olması bizim için belirleyici oldu. 3 şubemizde tek panel üzerinden personel takibi yapabiliyoruz.',
+                name: 'Ayşe K.',
+                role: 'Genel Müdür',
+                company: 'Perakende Sektörü',
+                stars: 5,
+                color: '#10b981',
+              },
+              {
+                quote: 'GPS doğrulama özelliği sahada çalışan ekibimiz için mükemmel. Artık kimin nerede olduğunu anlık görebiliyoruz.',
+                name: 'Can T.',
+                role: 'Operasyon Şefi',
+                company: 'Lojistik Sektörü',
+                stars: 5,
+                color: '#3b82f6',
+              },
+            ].map((t, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="glass"
+                style={{
+                  padding: '2.25rem 2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Corner glow */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0,
+                  width: 100, height: 100,
+                  background: `radial-gradient(circle at top left, ${t.color}10, transparent 70%)`,
+                  pointerEvents: 'none',
+                }} />
+
+                {/* Stars */}
+                <div style={{ display: 'flex', gap: 2, marginBottom: '1rem' }}>
+                  {Array.from({ length: t.stars }).map((_, j) => (
+                    <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24" stroke="none">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Quote */}
+                <p style={{
+                  color: 'var(--text-muted)',
+                  fontSize: '0.92rem',
+                  lineHeight: 1.8,
+                  flex: 1,
+                  marginBottom: '1.5rem',
+                  fontStyle: 'italic',
+                }}>
+                  "{t.quote}"
+                </p>
+
+                {/* Author */}
+                <div style={{
+                  paddingTop: '1rem',
+                  borderTop: '1px solid var(--glass-border)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                }}>
+                  <div style={{
+                    width: 38, height: 38,
+                    borderRadius: 10,
+                    background: `${t.color}14`,
+                    border: `1px solid ${t.color}28`,
+                    color: t.color,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontWeight: 800,
+                    fontSize: '0.85rem',
+                  }}>
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: 700, fontSize: '0.88rem', lineHeight: 1.3 }}>{t.name}</p>
+                    <p style={{ color: 'var(--text-subtle)', fontSize: '0.78rem' }}>
+                      {t.role} · {t.company}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FAQ ── */}
       <section style={{ paddingBottom: '8rem', position: 'relative', zIndex: 1 }}>
         <div className="container">
