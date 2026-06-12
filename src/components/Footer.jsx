@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
-
-const footerLinks = [
-  { label: 'Ana Sayfa', to: '/' },
-  { label: 'PDKS Nedir?', to: '/pdks-nedir' },
-  { label: 'Özellikler', to: '/ozellikler' },
-  { label: 'Nasıl Çalışır?', to: '/nasil-calisir' },
-  { label: 'Fiyatlandırma', to: '/fiyatlandirma' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'İletişim', to: '/iletisim' },
-];
-
-const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
+import { useLanguage } from '../i18n';
 
 export default function Footer() {
+  const { t, lang } = useLanguage();
+
+  const footerLinks = [
+    { label: t.nav.home, to: '/' },
+    { label: t.nav.about, to: '/pdks-nedir' },
+    { label: t.nav.features, to: '/ozellikler' },
+    { label: t.nav.howItWorks, to: '/nasil-calisir' },
+    { label: lang === 'tr' ? 'Fiyatlandırma' : 'Pricing', to: '/fiyatlandirma' },
+    { label: 'Blog', to: '/blog' },
+    { label: t.nav.contact, to: '/iletisim' },
+  ];
+
+
   return (
     <footer style={{
       borderTop: '1px solid var(--glass-border)',
@@ -53,16 +55,15 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.8, marginBottom: '1.75rem' }}>
-              Modern işletmeler için geliştirilmiş, bulut tabanlı personel yönetim çözümü. 
-              Donanımsız, hızlı ve güvenilir.
+              {t.footer.desc}
             </p>
             <a
-              href={whatsappUrl}
+              href={t.site.whatsapp}
               className="btn-primary"
               style={{ padding: '0.7rem 1.5rem', fontSize: '0.88rem' }}
               target="_blank" rel="noopener noreferrer"
             >
-              Ücretsiz Deneyin
+              {t.footer.cta}
               <ArrowUpRight size={15} />
             </a>
           </div>
@@ -70,7 +71,7 @@ export default function Footer() {
           {/* Links */}
           <div>
             <p style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-subtle)', marginBottom: '1.25rem' }}>
-              Platform
+              {t.footer.platformLabel}
             </p>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {footerLinks.map(link => (
@@ -96,13 +97,13 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <p style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-subtle)', marginBottom: '1.25rem' }}>
-              İletişim
+              {t.footer.contactLabel}
             </p>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
-                { icon: Phone, text: '0536 475 3784', href: 'tel:+905364753784' },
-                { icon: Mail, text: 'info@shiftlap.com', href: 'mailto:info@shiftlap.com' },
-                { icon: MapPin, text: 'Online Destek', href: null },
+                { icon: Phone, text: t.site.phone, href: 'tel:+905364753784' },
+                { icon: Mail, text: t.site.email, href: 'mailto:info@shiftlap.com' },
+                { icon: MapPin, text: t.site.address, href: null },
               ].map((item, i) => {
                 const Icon = item.icon;
                 const inner = (
@@ -138,10 +139,10 @@ export default function Footer() {
           gap: '1rem'
         }}>
           <p style={{ color: 'var(--text-subtle)', fontSize: '0.82rem' }}>
-            © {new Date().getFullYear()} Shiftlap. Tüm hakları saklıdır.
+            © {new Date().getFullYear()} {t.footer.copyright}
           </p>
           <div style={{ display: 'flex', gap: '2rem' }}>
-            {['Gizlilik Politikası', 'Kullanım Şartları', 'KVKK'].map(item => (
+            {t.footer.legal.map(item => (
               <a
                 key={item}
                 href="#"

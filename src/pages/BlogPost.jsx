@@ -4,8 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft, Tag, Share2, MessageCircle } from 'lucide-react';
 import { getPostBySlug, getAllPosts } from '../data/blogPosts';
 import { useSEO } from '../hooks/useSEO';
-
-const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum";
+import { useLanguage } from '../i18n';
 
 const categoryColors = {
   'Rehber': '#3b82f6',
@@ -192,6 +191,8 @@ export default function BlogPost() {
     description: 'Aradığınız blog yazısı bulunamadı.',
   });
 
+  const { t, lang } = useLanguage();
+
   // Scroll to top on mount
   useEffect(() => { window.scrollTo(0, 0); }, [slug]);
 
@@ -199,13 +200,13 @@ export default function BlogPost() {
     return (
       <div style={{ paddingTop: '12rem', paddingBottom: '8rem', textAlign: 'center' }}>
         <div className="container">
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem' }}>Yazı Bulunamadı</h1>
+          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem' }}>{t.blog.notFound}</h1>
           <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-            Aradığınız blog yazısı mevcut değil veya henüz yayınlanmamış.
+            {t.blog.notFoundDesc}
           </p>
           <Link to="/blog" className="btn-primary" style={{ display: 'inline-flex' }}>
             <ArrowLeft size={16} />
-            Blog'a Dön
+            {t.blog.backToBlog}
           </Link>
         </div>
       </div>
@@ -213,7 +214,7 @@ export default function BlogPost() {
   }
 
   const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString('tr-TR', {
+    return new Date(dateStr).toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', {
       year: 'numeric', month: 'long', day: 'numeric',
     });
   };
@@ -268,7 +269,7 @@ export default function BlogPost() {
             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
           >
             <ArrowLeft size={15} />
-            Tüm Yazılar
+            {t.blog.allPosts}
           </Link>
 
           {/* Meta */}
@@ -287,7 +288,7 @@ export default function BlogPost() {
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.82rem', color: 'var(--text-subtle)' }}>
               <Clock size={13} />
-              {post.readTime} dk okuma
+              {post.readTime} {t.blog.readTime}
             </span>
           </div>
 
@@ -333,19 +334,19 @@ export default function BlogPost() {
             textAlign: 'center',
           }}>
             <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-              Shiftlap'ı Ücretsiz Deneyin
+              {t.blog.tryFree}
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-              14 gün boyunca tüm özellikleri ücretsiz kullanın. Kredi kartı gerekmez.
+              {t.blog.tryFreeDesc}
             </p>
             <a
-              href={whatsappUrl}
+              href={t.site.whatsapp}
               className="btn-primary"
               target="_blank" rel="noopener noreferrer"
               style={{ display: 'inline-flex' }}
             >
               <MessageCircle size={16} />
-              Hemen Başlayın
+              {t.blog.startNow}
             </a>
           </div>
         </div>
@@ -361,7 +362,7 @@ export default function BlogPost() {
               paddingTop: '2.5rem',
               borderTop: '1px solid var(--glass-border)',
             }}>
-              Diğer Yazılar
+              {t.blog.relatedPosts}
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
               {related.map(p => (

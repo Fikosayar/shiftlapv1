@@ -2,29 +2,30 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, AlertCircle, TrendingUp, ArrowRight, Zap, Shield, Globe } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
+import { useLanguage } from '../i18n';
 
 const AboutPdks = () => {
+  const { t, lang } = useLanguage();
   useSEO({
-    title: 'PDKS Nedir? | Shiftlap',
-    description: 'Personel Devam Kontrol Sistemi nedir, nasıl çalışır? Shiftlap ile geleneksel PDKS farkını keşfedin.',
+    title: `${t.about.badge} | Shiftlap`,
+    description: t.about.subtitle.slice(0, 155),
     canonical: 'https://shiftlap.com/pdks-nedir',
   });
-  const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
 
-  const stats = [
-    { value: '%40', label: 'Verimlilik Artışı', sub: 'Ortalama iyileşme', color: '#ff6b00' },
-    { value: '%95', label: 'Hata Azalması', sub: 'Maaş hesaplamalarında', color: '#10b981' },
-    { value: '0₺', label: 'Donanım Maliyeti', sub: 'Ek ekipman gerekmez', color: '#3b82f6' },
-  ];
+  const statColors = ['#ff6b00', '#10b981', '#3b82f6'];
+  const stats = t.about.stats.map((s, i) => ({ ...s, color: statColors[i] }));
 
-  const benefits = [
-    'Hatalı Maaş Hesaplamalarının Önüne Geçer',
-    'İş Gücü Verimliliğini Artırır',
-    'Yasal Mevzuata Uygunluk Sağlar',
-    'Personel Disiplinini Optimize Eder',
-    'İzin ve Mesai Takibini Kolaylaştırır',
-    'Anlık Raporlama İmkânı Sunar'
-  ];
+  const sideCards = lang === 'tr'
+    ? [
+        { icon: Zap, title: 'Anlık Veri', desc: 'Tüm giriş-çıkış kayıtlarına gerçek zamanlı erişim', color: '#ff6b00' },
+        { icon: Shield, title: 'Güvenli Mimari', desc: 'Uçtan uca şifreleme ile verileriniz korunur', color: '#10b981' },
+        { icon: Globe, title: 'Her Yerden Erişim', desc: 'Tarayıcı veya mobil uygulama ile her cihazdan', color: '#3b82f6' },
+      ]
+    : [
+        { icon: Zap, title: 'Real-Time Data', desc: 'Access all check-in/out records in real-time', color: '#ff6b00' },
+        { icon: Shield, title: 'Secure Architecture', desc: 'Your data is protected with end-to-end encryption', color: '#10b981' },
+        { icon: Globe, title: 'Access Anywhere', desc: 'From any device via browser or mobile app', color: '#3b82f6' },
+      ];
 
   return (
     <motion.div
@@ -53,13 +54,11 @@ const AboutPdks = () => {
               marginBottom: '1.5rem'
             }}
           >
-            📖 PDKS Nedir?
+            {t.about.badge}
           </motion.div>
-          <h1 className="section-title">Personel Takibini Modernleştirin</h1>
+          <h1 className="section-title">{t.about.title}</h1>
           <p className="section-subtitle">
-            Personel Devam Kontrol Sistemi (PDKS), işletmelerin çalışanlarının 
-            çalışma saatlerini, devamsızlıklarını, izinlerini ve mesailerini 
-            takip etmek için kullandığı dijital bir altyapıdır.
+            {t.about.subtitle}
           </p>
         </div>
 
@@ -90,15 +89,13 @@ const AboutPdks = () => {
             viewport={{ once: true }}
           >
             <h2 style={{ fontSize: '2.25rem', fontWeight: '900', marginBottom: '1.5rem', letterSpacing: '-0.03em' }}>
-              Neden Bir PDKS'ye İhtiyacınız Var?
+              {t.about.whyTitle}
             </h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', lineHeight: 1.8 }}>
-              Manuel takip yöntemleri (kağıt imza, Excel tabloları vb.) hatalara açıktır 
-              ve ciddi bir zaman kaybı yaratır. PDKS kullanımı sadece zamanı ölçmekle 
-              kalmaz, aynı zamanda verimliliği artırır ve maliyetleri düşürür.
+              {t.about.whyDesc}
             </p>
             <ul className="flex flex-col" style={{ gap: '1rem', marginBottom: '2.5rem' }}>
-              {benefits.map((item, i) => (
+              {t.about.benefits.map((item, i) => (
                 <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <CheckCircle2 size={20} style={{ color: 'var(--primary)', flexShrink: 0 }} />
                   <span style={{ fontWeight: '600' }}>{item}</span>
@@ -106,13 +103,13 @@ const AboutPdks = () => {
               ))}
             </ul>
             <a
-              href={whatsappUrl}
+              href={t.site.whatsapp}
               className="btn-primary"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: 'inline-flex', padding: '1rem 2.5rem' }}
             >
-              Hemen Deneyin
+              {t.cta.button}
               <ArrowRight size={18} />
             </a>
           </motion.div>
@@ -126,11 +123,7 @@ const AboutPdks = () => {
           >
             <TrendingUp size={220} style={{ position: 'absolute', bottom: '-30px', right: '-30px', color: 'var(--primary)', opacity: 0.04 }} />
             <div className="flex flex-col" style={{ gap: '2.5rem', position: 'relative', zIndex: 1 }}>
-              {[
-                { icon: Zap, title: 'Anlık Veri', desc: 'Tüm giriş-çıkış kayıtlarına gerçek zamanlı erişim', color: '#ff6b00' },
-                { icon: Shield, title: 'Güvenli Mimari', desc: 'Uçtan uca şifreleme ile verileriniz korunur', color: '#10b981' },
-                { icon: Globe, title: 'Her Yerden Erişim', desc: 'Tarayıcı veya mobil uygulama ile her cihazdan', color: '#3b82f6' },
-              ].map((item, i) => {
+              {sideCards.map((item, i) => {
                 const Icon = item.icon;
                 return (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
@@ -178,29 +171,27 @@ const AboutPdks = () => {
           <div className="grid md:grid-cols-2" style={{ gap: '3rem', alignItems: 'center', position: 'relative', zIndex: 1 }}>
             <div>
               <h2 style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '1.25rem', letterSpacing: '-0.03em' }}>
-                Geleneksel PDKS vs. Shiftlap
+                {t.about.comparisonTitle}
               </h2>
               <p style={{ opacity: 0.85, lineHeight: 1.8 }}>
-                Eski nesil sistemler pahalı kart okuyucular, biyometrik cihazlar 
-                ve yerel sunucular gerektirir. Shiftlap ise tamamen bulut tabanlıdır 
-                ve donanım maliyetini sıfıra indirir.
+                {t.about.comparisonDesc}
               </p>
             </div>
             <div className="flex flex-col" style={{ gap: '1.25rem' }}>
               <div style={{ background: 'rgba(0,0,0,0.2)', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <h4 style={{ fontWeight: '700', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.7 }}>
-                  <AlertCircle size={18} /> Geleneksel Sistemler
+                  <AlertCircle size={18} /> {t.about.traditional.title}
                 </h4>
                 <p style={{ fontSize: '0.9rem', opacity: 0.65 }}>
-                  Yüksek bakım maliyeti, donanım arızaları, tek noktaya bağlılık, güncelleme güçlüğü.
+                  {t.about.traditional.desc}
                 </p>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.15)', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.3)' }}>
                 <h4 style={{ fontWeight: '700', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <CheckCircle2 size={18} /> Shiftlap Yaklaşımı
+                  <CheckCircle2 size={18} /> {t.about.shiftlap.title}
                 </h4>
                 <p style={{ fontSize: '0.9rem', opacity: 0.9 }}>
-                  Her yerden erişim, sıfır donanım kurulumu, anlık mobil bildirimler, otomatik güncellemeler.
+                  {t.about.shiftlap.desc}
                 </p>
               </div>
             </div>

@@ -12,8 +12,7 @@ import {
 } from 'lucide-react';
 import dashboardImg from '../assets/dashboard.png';
 import { useSEO } from '../hooks/useSEO';
-
-const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
+import { useLanguage } from '../i18n';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -21,46 +20,22 @@ const fadeUp = (delay = 0) => ({
   transition: { delay, duration: 0.55, ease: [0.22, 1, 0.36, 1] }
 });
 
-const features = [
-  {
-    icon: Smartphone,
-    title: 'Mobil QR Teknolojisi',
-    desc: 'Donanım maliyetini sıfırlayın. Personelleriniz kendi telefonlarıyla güvenli giriş yapsın.',
-    color: '#ff6b00'
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Konum Doğrulama',
-    desc: 'GPS tabanlı doğrulama ile personelin gerçekten iş başında olduğundan emin olun.',
-    color: '#10b981'
-  },
-  {
-    icon: BarChart3,
-    title: 'Akıllı Raporlama',
-    desc: 'Ay sonu puantaj karmaşasına son. Tek tıkla hatasız maaş hesaplama verileri alın.',
-    color: '#3b82f6'
-  }
-];
-
-const faqs = [
-  { q: 'Ücretlendirme nasıl yapılıyor?', a: 'Personel sayısına göre esnek paketlerimiz mevcuttur. Detaylı bilgi için bizimle iletişime geçin.' },
-  { q: 'Donanım almam gerekiyor mu?', a: 'Hayır. Shiftlap tamamen yazılım tabanlı çalışır, ek ekipman gerekmez.' },
-  { q: 'Destek süreci nasıl işliyor?', a: 'WhatsApp ve e-posta üzerinden Türkçe teknik destek ekibimizle yanınızdayız.' },
-  { q: 'Verilerim güvende mi?', a: 'Tüm verileriniz uçtan uca şifreli, yedeklenmiş bulut sunucularında saklanır.' }
-];
-
-const stats = [
-  { value: '0₺', label: 'Donanım Maliyeti', icon: Users },
-  { value: '%99.9', label: 'Uptime Garantisi', icon: Clock },
-  { value: '<30s', label: 'Kurulum Süresi', icon: ChevronRight },
-];
+const featureIcons = [Smartphone, ShieldCheck, BarChart3];
+const featureColors = ['#ff6b00', '#10b981', '#3b82f6'];
+const testimonialColors = ['#ff6b00', '#10b981', '#3b82f6'];
 
 export default function HomePage() {
+  const { t } = useLanguage();
+
   useSEO({
-    title: 'Shiftlap | Bulut Tabanlı PDKS ve Personel Takip Sistemi',
-    description: 'QR kod ve GPS ile personel devam takibini modernleştirin. Donanım gerektirmez, 14 gün ücretsiz deneyin.',
+    title: `Shiftlap | ${t.site.tagline}`,
+    description: t.hero.subtitle.slice(0, 155),
     canonical: 'https://shiftlap.com/',
   });
+
+  const features = t.features.items.map((item, i) => ({
+    ...item, icon: featureIcons[i], color: featureColors[i]
+  }));
 
   return (
     <div style={{ position: 'relative', overflow: 'hidden' }}>
@@ -75,7 +50,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center text-center">
 
             <motion.div {...fadeUp(0)} className="badge">
-              Shiftlap v1.0 — Yayında
+              {t.hero.badge}
             </motion.div>
 
             <motion.h1
@@ -89,16 +64,16 @@ export default function HomePage() {
                 maxWidth: 820
               }}
             >
-              İş Gücünüzü{' '}
+              {t.hero.titleLine1}{' '}
               <span style={{
                 background: 'linear-gradient(135deg, #ff6b00, #fbbf24)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
               }}>
-                Akıllıca
+                {t.hero.titleHighlight}
               </span>{' '}
-              Yönetin
+              {t.hero.titleLine2}
             </motion.h1>
 
             <motion.p
@@ -112,9 +87,7 @@ export default function HomePage() {
                 fontWeight: 400
               }}
             >
-              Geleneksel PDKS cihazlarını unutun. Shiftlap ile personel takibi 
-              artık sadece bir QR kod uzağınızda — bulut tabanlı, mobil uyumlu 
-              ve saniyeler içinde hazır.
+              {t.hero.subtitle}
             </motion.p>
 
             <motion.div
@@ -123,16 +96,16 @@ export default function HomePage() {
               style={{ gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}
             >
               <a
-                href={whatsappUrl}
+                href={t.site.whatsapp}
                 className="btn-primary"
                 style={{ padding: '1rem 2.25rem', fontSize: '1rem' }}
                 target="_blank" rel="noopener noreferrer"
               >
-                Ücretsiz Denemeyi Başlat
+                {t.hero.ctaPrimary}
                 <ChevronRight size={18} />
               </a>
               <a
-                href={whatsappUrl}
+                href={t.site.whatsapp}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex',
@@ -150,7 +123,7 @@ export default function HomePage() {
                 onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,107,0,0.35)'; e.currentTarget.style.color = 'var(--text-main)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--glass-border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
               >
-                Demo Talep Et
+                {t.hero.ctaSecondary}
               </a>
             </motion.div>
           </div>
@@ -174,7 +147,7 @@ export default function HomePage() {
               backdropFilter: 'blur(16px)'
             }}
           >
-            {stats.map((s, i) => (
+            {t.stats.map((s, i) => (
               <div key={i} style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.04em', color: 'var(--primary)', lineHeight: 1 }}>
                   {s.value}
@@ -207,7 +180,7 @@ export default function HomePage() {
               }}>
                 <img
                   src={dashboardImg}
-                  alt="Shiftlap Dashboard Önizlemesi"
+                  alt="Shiftlap Dashboard"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 <div style={{
@@ -225,10 +198,10 @@ export default function HomePage() {
       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 1 }}>
         <div className="container">
           <div className="text-center">
-            <div className="badge" style={{ display: 'inline-flex' }}>Öne Çıkan Özellikler</div>
-            <h2 className="section-title">Dijital Dönüşüm Başlıyor</h2>
+            <div className="badge" style={{ display: 'inline-flex' }}>{t.features.badge}</div>
+            <h2 className="section-title">{t.features.title}</h2>
             <p className="section-subtitle">
-              Operasyonel mükemmellik için ihtiyacınız olan her şey tek bir platformda.
+              {t.features.subtitle}
             </p>
           </div>
 
@@ -277,40 +250,17 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: '4rem' }}>
             <motion.div {...fadeUp(0)}>
-              <div className="badge" style={{ display: 'inline-flex' }}>Müşteri Deneyimleri</div>
+              <div className="badge" style={{ display: 'inline-flex' }}>{t.testimonials.badge}</div>
             </motion.div>
             <motion.h2 {...fadeUp(0.1)} style={{ fontSize: 'clamp(1.75rem, 3vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.025em' }}>
-              Kullanıcılarımız Ne Diyor?
+              {t.testimonials.title}
             </motion.h2>
           </div>
 
           <div className="grid md:grid-cols-3" style={{ gap: '1.5rem', maxWidth: 1100, margin: '0 auto' }}>
-            {[
-              {
-                quote: 'Shiftlap öncesinde Excel tablolarıyla uğraşıyorduk. Şimdi ay sonu puantajı hazırlamak 5 dakikamızı alıyor. Keşke daha önce geçseydik.',
-                name: 'Mehmet Y.',
-                role: 'İK Müdürü',
-                company: 'Üretim Sektörü',
-                stars: 5,
-                color: '#ff6b00',
-              },
-              {
-                quote: 'Donanım maliyeti sıfır olması bizim için belirleyici oldu. 3 şubemizde tek panel üzerinden personel takibi yapabiliyoruz.',
-                name: 'Ayşe K.',
-                role: 'Genel Müdür',
-                company: 'Perakende Sektörü',
-                stars: 5,
-                color: '#10b981',
-              },
-              {
-                quote: 'GPS doğrulama özelliği sahada çalışan ekibimiz için mükemmel. Artık kimin nerede olduğunu anlık görebiliyoruz.',
-                name: 'Can T.',
-                role: 'Operasyon Şefi',
-                company: 'Lojistik Sektörü',
-                stars: 5,
-                color: '#3b82f6',
-              },
-            ].map((t, i) => (
+            {t.testimonials.items.map((ti, i) => {
+              const tColor = testimonialColors[i];
+              return (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 24 }}
@@ -330,13 +280,13 @@ export default function HomePage() {
                 <div style={{
                   position: 'absolute', top: 0, left: 0,
                   width: 100, height: 100,
-                  background: `radial-gradient(circle at top left, ${t.color}10, transparent 70%)`,
+                  background: `radial-gradient(circle at top left, ${tColor}10, transparent 70%)`,
                   pointerEvents: 'none',
                 }} />
 
                 {/* Stars */}
                 <div style={{ display: 'flex', gap: 2, marginBottom: '1rem' }}>
-                  {Array.from({ length: t.stars }).map((_, j) => (
+                  {Array.from({ length: 5 }).map((_, j) => (
                     <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24" stroke="none">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg>
@@ -352,7 +302,7 @@ export default function HomePage() {
                   marginBottom: '1.5rem',
                   fontStyle: 'italic',
                 }}>
-                  "{t.quote}"
+                  "{ti.quote}"
                 </p>
 
                 {/* Author */}
@@ -366,24 +316,25 @@ export default function HomePage() {
                   <div style={{
                     width: 38, height: 38,
                     borderRadius: 10,
-                    background: `${t.color}14`,
-                    border: `1px solid ${t.color}28`,
-                    color: t.color,
+                    background: `${tColor}14`,
+                    border: `1px solid ${tColor}28`,
+                    color: tColor,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontWeight: 800,
                     fontSize: '0.85rem',
                   }}>
-                    {t.name.charAt(0)}
+                    {ti.name.charAt(0)}
                   </div>
                   <div>
-                    <p style={{ fontWeight: 700, fontSize: '0.88rem', lineHeight: 1.3 }}>{t.name}</p>
+                    <p style={{ fontWeight: 700, fontSize: '0.88rem', lineHeight: 1.3 }}>{ti.name}</p>
                     <p style={{ color: 'var(--text-subtle)', fontSize: '0.78rem' }}>
-                      {t.role} · {t.company}
+                      {ti.role} · {ti.company}
                     </p>
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -393,13 +344,13 @@ export default function HomePage() {
         <div className="container">
           <div className="glass" style={{ padding: '4rem 3.5rem', maxWidth: 860, margin: '0 auto' }}>
             <div className="text-center" style={{ marginBottom: '3rem' }}>
-              <div className="badge" style={{ display: 'inline-flex' }}>SSS</div>
+              <div className="badge" style={{ display: 'inline-flex' }}>{t.faq.badge}</div>
               <h2 style={{ fontSize: 'clamp(1.75rem, 3vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.025em' }}>
-                Sıkça Sorulan Sorular
+                {t.faq.title}
               </h2>
             </div>
             <div className="grid md:grid-cols-2" style={{ gap: '2.5rem' }}>
-              {faqs.map((item, i) => (
+              {t.faq.items.map((item, i) => (
                 <div key={i} style={{ borderLeft: '2px solid rgba(255,107,0,0.25)', paddingLeft: '1.25rem' }}>
                   <h4 style={{ fontWeight: 700, marginBottom: '0.6rem', fontSize: '0.95rem' }}>
                     {item.q}
@@ -433,18 +384,18 @@ export default function HomePage() {
             <div style={{ position: 'absolute', top: '-40%', right: '-10%', width: 400, height: 400, background: 'rgba(255,255,255,0.08)', borderRadius: '50%', filter: 'blur(40px)' }} />
             <div style={{ position: 'relative', zIndex: 1 }}>
               <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.03em' }}>
-                Hemen Ücretsiz Başlayın
+                {t.cta.title}
               </h2>
               <p style={{ fontSize: '1.05rem', opacity: 0.85, marginBottom: '2.5rem', maxWidth: 520, margin: '0 auto 2.5rem' }}>
-                Kurulum gerektirmez. 14 gün boyunca tüm özellikleri ücretsiz kullanın.
+                {t.cta.subtitle}
               </p>
               <a
-                href={whatsappUrl}
+                href={t.site.whatsapp}
                 className="btn-primary"
                 style={{ background: 'white', color: '#ff6b00', padding: '1rem 2.5rem', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
                 target="_blank" rel="noopener noreferrer"
               >
-                WhatsApp Üzerinden Bilgi Al
+                {t.cta.button}
                 <ArrowRight size={18} />
               </a>
             </div>

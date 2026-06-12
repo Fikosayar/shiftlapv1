@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, MessageCircle, Clock, CheckCircle2 } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
+import { useLanguage } from '../i18n';
 
 const Contact = () => {
+  const { t } = useLanguage();
   useSEO({
-    title: 'Iletisim | Shiftlap PDKS',
-    description: '0536 475 3784 numarali telefon veya info@shiftlap.com e-postasi ile bize ulasin. WhatsApp anlik destek icin hazir.',
+    title: `${t.contact.badge} | Shiftlap`,
+    description: t.contact.subtitle.slice(0, 155),
     canonical: 'https://shiftlap.com/iletisim',
   });
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);
-
-  const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
 
   const inputStyle = {
     padding: '0.9rem 1rem',
@@ -27,32 +27,12 @@ const Contact = () => {
     fontFamily: 'inherit'
   };
 
-  const contactCards = [
-    {
-      icon: Phone,
-      label: 'Telefon',
-      value: '0536 475 3784',
-      sub: 'Haftaiçi 09:00–18:00',
-      color: '#ff6b00',
-      href: 'tel:+905364753784'
-    },
-    {
-      icon: Mail,
-      label: 'E-posta',
-      value: 'info@shiftlap.com',
-      sub: 'Ortalama 2 saat içinde yanıt',
-      color: '#3b82f6',
-      href: 'mailto:info@shiftlap.com'
-    },
-    {
-      icon: MessageCircle,
-      label: 'WhatsApp',
-      value: 'Anlık Destek',
-      sub: 'Mesai saatleri içinde',
-      color: '#10b981',
-      href: whatsappUrl
-    }
-  ];
+  const cardIcons = [Phone, Mail, MessageCircle];
+  const cardColors = ['#ff6b00', '#3b82f6', '#10b981'];
+  const cardHrefs = ['tel:+905364753784', 'mailto:info@shiftlap.com', t.site.whatsapp];
+  const contactCards = t.contact.cards.map((c, i) => ({
+    ...c, icon: cardIcons[i], color: cardColors[i], href: cardHrefs[i]
+  }));
 
   return (
     <motion.div
@@ -81,12 +61,11 @@ const Contact = () => {
               marginBottom: '1.5rem'
             }}
           >
-            📬 Bize Ulaşın
+            {t.contact.badge}
           </motion.div>
-          <h1 className="section-title">Sizinle Konuşmak İstiyoruz</h1>
+          <h1 className="section-title">{t.contact.title}</h1>
           <p className="section-subtitle">
-            Ürün hakkında sorunuz mu var? Fiyat teklifi mi istiyorsunuz?
-            Size en hızlı şekilde geri döneceğiz.
+            {t.contact.subtitle}
           </p>
         </div>
 
@@ -171,13 +150,13 @@ const Contact = () => {
               <MessageCircle size={28} />
             </div>
             <h3 style={{ fontSize: '1.4rem', fontWeight: '900', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-              Hızlı Yanıt İçin WhatsApp
+              {t.contact.whatsappTitle}
             </h3>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '2rem', fontSize: '0.95rem' }}>
-              Formu doldurmak yerine doğrudan WhatsApp'tan yazabilirsiniz. Çok daha hızlı yanıt alırsınız.
+              {t.contact.whatsappDesc}
             </p>
             <ul className="flex flex-col" style={{ gap: '0.75rem', marginBottom: '2rem' }}>
-              {['Ortalama 15 dk yanıt süresi', 'Türkçe destek', 'Mesai saatlerinde canlı'].map((item, i) => (
+              {t.contact.whatsappBenefits.map((item, i) => (
                 <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem' }}>
                   <CheckCircle2 size={16} style={{ color: '#10b981', flexShrink: 0 }} />
                   <span style={{ color: 'var(--text-muted)' }}>{item}</span>
@@ -185,14 +164,14 @@ const Contact = () => {
               ))}
             </ul>
             <a
-              href={whatsappUrl}
+              href={t.site.whatsapp}
               className="btn-primary"
               target="_blank"
               rel="noopener noreferrer"
               style={{ width: '100%', justifyContent: 'center', background: '#10b981', boxShadow: '0 10px 25px -5px rgba(16,185,129,0.4)' }}
             >
               <MessageCircle size={18} />
-              WhatsApp'ta Yaz
+              {t.contact.whatsappBtn}
             </a>
           </motion.div>
 
@@ -206,7 +185,7 @@ const Contact = () => {
             onSubmit={(e) => { e.preventDefault(); setSent(true); }}
           >
             <h3 style={{ fontSize: '1.4rem', fontWeight: '900', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-              Mesaj Gönderin
+              {t.contact.formTitle}
             </h3>
 
             {sent ? (
@@ -220,17 +199,17 @@ const Contact = () => {
                 textAlign: 'center'
               }}>
                 <CheckCircle2 size={64} style={{ color: '#10b981' }} />
-                <h4 style={{ fontSize: '1.5rem', fontWeight: '800' }}>Mesajınız Alındı!</h4>
-                <p style={{ color: 'var(--text-muted)' }}>En kısa sürede size geri döneceğiz.</p>
+                <h4 style={{ fontSize: '1.5rem', fontWeight: '800' }}>{t.contact.successTitle}</h4>
+                <p style={{ color: 'var(--text-muted)' }}>{t.contact.successDesc}</p>
               </div>
             ) : (
               <>
                 <div className="grid md:grid-cols-2" style={{ gap: '1.25rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>Ad Soyad</label>
+                    <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>{t.contact.fields.name}</label>
                     <input
                       type="text"
-                      placeholder="Ahmet Yılmaz"
+                      placeholder={t.contact.placeholders.name}
                       required
                       style={inputStyle}
                       onFocus={(e) => e.target.style.borderColor = 'var(--primary)'}
@@ -240,10 +219,10 @@ const Contact = () => {
                     />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>E-posta</label>
+                    <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>{t.contact.fields.email}</label>
                     <input
                       type="email"
-                      placeholder="ornek@firma.com"
+                      placeholder={t.contact.placeholders.email}
                       required
                       style={inputStyle}
                       onFocus={(e) => e.target.style.borderColor = 'var(--primary)'}
@@ -254,10 +233,10 @@ const Contact = () => {
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>Konu</label>
+                  <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>{t.contact.fields.subject}</label>
                   <input
                     type="text"
-                    placeholder="Nasıl yardımcı olabiliriz?"
+                    placeholder={t.contact.placeholders.subject}
                     style={inputStyle}
                     onFocus={(e) => e.target.style.borderColor = 'var(--primary)'}
                     onBlur={(e) => e.target.style.borderColor = 'var(--glass-border)'}
@@ -266,10 +245,10 @@ const Contact = () => {
                   />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>Mesaj</label>
+                  <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)' }}>{t.contact.fields.message}</label>
                   <textarea
                     rows="5"
-                    placeholder="Mesajınızı buraya yazın..."
+                    placeholder={t.contact.placeholders.message}
                     required
                     style={{ ...inputStyle, resize: 'vertical', minHeight: '120px' }}
                     onFocus={(e) => e.target.style.borderColor = 'var(--primary)'}
@@ -279,7 +258,7 @@ const Contact = () => {
                   />
                 </div>
                 <button type="submit" className="btn-primary" style={{ justifyContent: 'center', padding: '1rem' }}>
-                  Mesaj Gönder
+                  {t.contact.submitBtn}
                   <Send size={18} />
                 </button>
               </>

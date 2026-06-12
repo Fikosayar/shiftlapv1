@@ -2,41 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { UserPlus, Smartphone, QrCode, LineChart, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
+import { useLanguage } from '../i18n';
 
-const steps = [
-  {
-    icon: UserPlus,
-    title: 'Hızlı Kurulum',
-    desc: 'Şirket profilinizi oluşturun ve personellerinizi saniyeler içinde sisteme ekleyin.',
-    tag: 'Adım 1'
-  },
-  {
-    icon: Smartphone,
-    title: 'Uygulama İndirme',
-    desc: "Personelleriniz Shiftlap mobil uygulamasını App Store veya Play Store'dan indirir.",
-    tag: 'Adım 2'
-  },
-  {
-    icon: QrCode,
-    title: 'Okut ve Başla',
-    desc: 'İş yerindeki QR kodu telefonla okutarak mesaiyi başlatın. Konum doğrulaması otomatik yapılır.',
-    tag: 'Adım 3'
-  },
-  {
-    icon: LineChart,
-    title: 'Takip ve Rapor',
-    desc: 'Yönetim panelinden tüm giriş-çıkışları anlık takip edin, ay sonunda tek tıkla puantaj hazırlayın.',
-    tag: 'Adım 4'
-  }
-];
+const stepIcons = [UserPlus, Smartphone, QrCode, LineChart];
 
 const HowItWorks = () => {
+  const { t } = useLanguage();
   useSEO({
-    title: "Shiftlap Nasil Calisir? | 4 Adimda PDKS Kurulumu",
-    description: "Shiftlap ile baslamak cok kolay. Hesap acin, personeli ekleyin, QR kodu okutun ve raporlarinizi aninda alin.",
+    title: `${t.howItWorks.title} | Shiftlap`,
+    description: t.howItWorks.subtitle.slice(0, 155),
     canonical: 'https://shiftlap.com/nasil-calisir',
   });
-  const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim";
+
+  const steps = t.howItWorks.steps.map((s, i) => ({
+    ...s, icon: stepIcons[i]
+  }));
 
 
   return (
@@ -65,12 +45,11 @@ const HowItWorks = () => {
               marginBottom: '1.5rem'
             }}
           >
-            🛠 Nasıl Çalışır?
+            {t.howItWorks.badge}
           </motion.div>
-          <h1 className="section-title">4 Adımda Hazırsınız</h1>
+          <h1 className="section-title">{t.howItWorks.title}</h1>
           <p className="section-subtitle">
-            Shiftlap'ı kullanmaya başlamak sandığınızdan çok daha kolay. 
-            Sadece 4 adımda işletmenizi dijitalleştirin.
+            {t.howItWorks.subtitle}
           </p>
         </div>
 
@@ -170,31 +149,24 @@ const HowItWorks = () => {
           <div className="grid md:grid-cols-2" style={{ gap: '3rem', alignItems: 'center' }}>
             <div>
               <h2 style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '1rem', letterSpacing: '-0.03em' }}>
-                Neden Shiftlap?
+                {t.howItWorks.whyTitle}
               </h2>
               <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: 1.8 }}>
-                Tek seferlik kurulum, sıfır bakım maliyeti, anlık raporlama. 
-                İşletmenizin büyüklüğü ne olursa olsun, Shiftlap sizinle ölçeklenir.
+                {t.howItWorks.whyDesc}
               </p>
               <a
-                href={whatsappUrl}
+                href={t.site.whatsapp}
                 className="btn-primary"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ padding: '1rem 2.5rem', display: 'inline-flex' }}
               >
-                Ücretsiz Başlayın
+                {t.cta.button}
                 <ArrowRight size={18} />
               </a>
             </div>
             <ul className="flex flex-col" style={{ gap: '1.25rem' }}>
-              {[
-                '14 gün ücretsiz, kredi kartı gerekmez',
-                'Dakikalar içinde kurulum tamamlanır',
-                'Sınırsız personel ekleme imkânı',
-                'Türkçe 7/24 teknik destek',
-                'Bulut tabanlı, veriler her zaman güvende'
-              ].map((item, i) => (
+              {t.howItWorks.benefits.map((item, i) => (
                 <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <CheckCircle2 size={20} style={{ color: 'var(--primary)', flexShrink: 0 }} />
                   <span style={{ fontWeight: '600' }}>{item}</span>

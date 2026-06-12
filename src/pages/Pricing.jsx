@@ -2,87 +2,51 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, X, Zap, ArrowRight, MessageCircle, HelpCircle } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
+import { useLanguage } from '../i18n';
 
-const whatsappUrl = "https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20fiyatland%C4%B1rma%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum";
-
-const plans = [
-  {
-    name: 'Başlangıç',
-    desc: 'Küçük işletmeler için ideal',
-    price: { monthly: 299, yearly: 249 },
-    personel: '1–15 personel',
-    badge: null,
-    features: [
-      { text: 'QR Kod Giriş/Çıkış', included: true },
-      { text: 'GPS Konum Doğrulama', included: true },
-      { text: 'Temel Raporlama', included: true },
-      { text: 'Mobil Uygulama Erişimi', included: true },
-      { text: 'E-posta Destek', included: true },
-      { text: 'Vardiya Yönetimi', included: false },
-      { text: 'Gelişmiş Raporlama (Excel/PDF)', included: false },
-      { text: 'API Entegrasyonu', included: false },
-      { text: 'Öncelikli Destek', included: false },
-    ],
-    color: 'var(--text-muted)',
-    borderColor: 'var(--glass-border)',
-  },
-  {
-    name: 'Profesyonel',
-    desc: 'Büyüyen ekipler için en popüler',
-    price: { monthly: 599, yearly: 499 },
-    personel: '16–50 personel',
-    badge: 'En Popüler',
-    features: [
-      { text: 'QR Kod Giriş/Çıkış', included: true },
-      { text: 'GPS Konum Doğrulama', included: true },
-      { text: 'Temel Raporlama', included: true },
-      { text: 'Mobil Uygulama Erişimi', included: true },
-      { text: 'E-posta + WhatsApp Destek', included: true },
-      { text: 'Vardiya Yönetimi', included: true },
-      { text: 'Gelişmiş Raporlama (Excel/PDF)', included: true },
-      { text: 'API Entegrasyonu', included: false },
-      { text: 'Öncelikli Destek', included: false },
-    ],
-    color: '#ff6b00',
-    borderColor: 'rgba(255, 107, 0, 0.5)',
-  },
-  {
-    name: 'Kurumsal',
-    desc: 'Büyük ölçekli organizasyonlar için',
-    price: { monthly: null, yearly: null },
-    personel: '50+ personel',
-    badge: null,
-    features: [
-      { text: 'QR Kod Giriş/Çıkış', included: true },
-      { text: 'GPS Konum Doğrulama', included: true },
-      { text: 'Temel Raporlama', included: true },
-      { text: 'Mobil Uygulama Erişimi', included: true },
-      { text: 'Öncelikli Destek (Telefon + WhatsApp)', included: true },
-      { text: 'Vardiya Yönetimi', included: true },
-      { text: 'Gelişmiş Raporlama (Excel/PDF)', included: true },
-      { text: 'API Entegrasyonu', included: true },
-      { text: 'Özel Eğitim & Kurulum Desteği', included: true },
-    ],
-    color: 'var(--text-muted)',
-    borderColor: 'var(--glass-border)',
-  },
+const planPrices = [
+  { monthly: 299, yearly: 249 },
+  { monthly: 599, yearly: 499 },
+  { monthly: null, yearly: null },
 ];
 
-const faqs = [
-  { q: 'Ödeme yöntemleri nelerdir?', a: 'Kredi kartı, banka havalesi ve EFT ile ödeme yapabilirsiniz.' },
-  { q: 'Sözleşme zorunluluğu var mı?', a: 'Hayır. Aylık planlarda istediğiniz zaman iptal edebilirsiniz. Yıllık planlarda yıl sonuna kadar taahhüt vardır.' },
-  { q: 'Fatura kesiliyor mu?', a: 'Evet. Her ödeme döneminde e-Fatura kesilir ve e-posta adresinize gönderilir.' },
-  { q: 'Paket yükseltme/düşürme yapabilir miyim?', a: 'Evet. Paketinizi istediğiniz zaman değiştirebilirsiniz, fark iade veya ek ücret olarak yansıtılır.' },
+const planColors = [
+  { color: 'var(--text-muted)', borderColor: 'var(--glass-border)' },
+  { color: '#ff6b00', borderColor: 'rgba(255, 107, 0, 0.5)' },
+  { color: 'var(--text-muted)', borderColor: 'var(--glass-border)' },
+];
+
+// Feature include matrix: [plan0, plan1, plan2] for each feature index
+const featureIncludes = [
+  [true, true, true],     // QR
+  [true, true, true],     // GPS
+  [true, true, true],     // Basic Reporting
+  [true, true, true],     // Mobile App
+  [true, true, true],     // Email Support
+  [false, true, true],    // Shift Mgmt
+  [false, true, true],    // Advanced Reporting
+  [false, false, true],   // API
+  [false, false, true],   // Priority Support
 ];
 
 const Pricing = () => {
+  const { t } = useLanguage();
   useSEO({
-    title: 'Fiyatlandırma | Shiftlap PDKS Paketleri',
-    description: 'Shiftlap PDKS fiyatları: Başlangıç, Profesyonel ve Kurumsal paketler. 14 gün ücretsiz deneyin, donanım gerektirmez.',
+    title: `${t.pricing.badge} | Shiftlap`,
+    description: t.pricing.subtitle.slice(0, 155),
     canonical: 'https://shiftlap.com/fiyatlandirma',
   });
 
   const [isYearly, setIsYearly] = useState(true);
+
+  const plans = t.pricing.plans.map((p, i) => ({
+    ...p,
+    price: planPrices[i],
+    ...planColors[i],
+    features: t.pricing.features.map((text, j) => ({
+      text, included: featureIncludes[j][i]
+    })),
+  }));
 
   return (
     <motion.div
@@ -97,10 +61,10 @@ const Pricing = () => {
       {/* Hero */}
       <section style={{ paddingTop: '10rem', paddingBottom: '4rem', position: 'relative', zIndex: 1 }}>
         <div className="container text-center">
-          <div className="badge" style={{ display: 'inline-flex' }}>Şeffaf Fiyatlandırma</div>
-          <h1 className="section-title">İşletmenize Uygun Plan Seçin</h1>
+          <div className="badge" style={{ display: 'inline-flex' }}>{t.pricing.badge}</div>
+          <h1 className="section-title">{t.pricing.title}</h1>
           <p className="section-subtitle" style={{ marginBottom: '2.5rem' }}>
-            14 gün boyunca tüm özellikleri ücretsiz deneyin. Kredi kartı gerekmez.
+            {t.pricing.subtitle}
           </p>
 
           {/* Toggle */}
@@ -129,7 +93,7 @@ const Pricing = () => {
                 fontFamily: 'var(--font-family)',
               }}
             >
-              Aylık
+              {t.pricing.monthly}
             </button>
             <button
               onClick={() => setIsYearly(true)}
@@ -146,7 +110,7 @@ const Pricing = () => {
                 fontFamily: 'var(--font-family)',
               }}
             >
-              Yıllık
+              {t.pricing.yearly}
               <span style={{
                 marginLeft: 6,
                 padding: '2px 8px',
@@ -156,7 +120,7 @@ const Pricing = () => {
                 fontWeight: 700,
                 color: isYearly ? 'white' : 'var(--primary)',
               }}>
-                %20 İndirim
+                {t.pricing.discount}
               </span>
             </button>
           </div>
@@ -165,7 +129,7 @@ const Pricing = () => {
           <div className="grid md:grid-cols-3" style={{ gap: '1.5rem', maxWidth: 1100, margin: '0 auto' }}>
             {plans.map((plan, i) => {
               const price = isYearly ? plan.price.yearly : plan.price.monthly;
-              const isPro = plan.badge === 'En Popüler';
+              const isPro = i === 1;
               return (
                 <motion.div
                   key={i}
@@ -219,11 +183,11 @@ const Pricing = () => {
                         <span style={{ fontSize: '2.75rem', fontWeight: 800, letterSpacing: '-0.04em', color: plan.color === 'var(--text-muted)' ? 'var(--text-main)' : plan.color }}>
                           {price}₺
                         </span>
-                        <span style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginLeft: 4 }}>/ay</span>
+                        <span style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginLeft: 4 }}>{t.pricing.perMonth}</span>
                       </>
                     ) : (
                       <span style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em' }}>
-                        Teklif Alın
+                        {t.pricing.getQuote}
                       </span>
                     )}
                   </div>
@@ -233,7 +197,7 @@ const Pricing = () => {
 
                   {/* CTA */}
                   <a
-                    href={whatsappUrl}
+                    href={t.site.whatsapp}
                     target="_blank" rel="noopener noreferrer"
                     className={isPro ? 'btn-primary' : ''}
                     style={{
@@ -255,7 +219,7 @@ const Pricing = () => {
                       } : {}),
                     }}
                   >
-                    {price ? '14 Gün Ücretsiz Deneyin' : 'Satış Ekibiyle Görüşün'}
+                    {price ? t.pricing.tryFree : t.pricing.talkSales}
                     <ArrowRight size={16} />
                   </a>
 
@@ -294,14 +258,14 @@ const Pricing = () => {
             <div className="text-center" style={{ marginBottom: '2.5rem' }}>
               <div className="badge" style={{ display: 'inline-flex' }}>
                 <HelpCircle size={14} />
-                Fiyatlandırma SSS
+                {t.pricing.faqBadge}
               </div>
               <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, letterSpacing: '-0.025em' }}>
-                Sıkça Sorulan Sorular
+                {t.pricing.faqTitle}
               </h2>
             </div>
             <div className="grid md:grid-cols-2" style={{ gap: '2rem' }}>
-              {faqs.map((item, i) => (
+              {t.pricing.faqs.map((item, i) => (
                 <div key={i} style={{ borderLeft: '2px solid rgba(255,107,0,0.25)', paddingLeft: '1.15rem' }}>
                   <h4 style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '0.9rem' }}>{item.q}</h4>
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.75 }}>{item.a}</p>
@@ -328,19 +292,19 @@ const Pricing = () => {
             <div style={{ position: 'absolute', top: '-40%', right: '-10%', width: 350, height: 350, background: 'rgba(255,255,255,0.08)', borderRadius: '50%', filter: 'blur(40px)' }} />
             <div style={{ position: 'relative', zIndex: 1 }}>
               <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.025em' }}>
-                Hangi Paket Size Uygun?
+                {t.pricing.ctaTitle}
               </h2>
               <p style={{ fontSize: '1rem', opacity: 0.85, marginBottom: '2rem', maxWidth: 500, margin: '0 auto 2rem' }}>
-                Kararsız mısınız? Ekibimize yazın, işletmenize en uygun çözümü birlikte belirleyelim.
+                {t.pricing.ctaDesc}
               </p>
               <a
-                href={whatsappUrl}
+                href={t.site.whatsapp}
                 className="btn-primary"
                 style={{ background: 'white', color: '#ff6b00', padding: '0.9rem 2.25rem', boxShadow: '0 8px 24px rgba(0,0,0,0.15)' }}
                 target="_blank" rel="noopener noreferrer"
               >
                 <MessageCircle size={17} />
-                Ücretsiz Danışmanlık Alın
+                {t.pricing.ctaBtn}
               </a>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, Tag, BookOpen } from 'lucide-react';
 import { getAllPosts, getAllCategories } from '../data/blogPosts';
 import { useSEO } from '../hooks/useSEO';
+import { useLanguage } from '../i18n';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -20,9 +21,10 @@ const categoryColors = {
 };
 
 export default function Blog() {
+  const { t, lang } = useLanguage();
   useSEO({
-    title: 'Blog | Shiftlap — PDKS ve Personel Yönetimi Yazıları',
-    description: 'PDKS, personel takibi, vardiya yönetimi ve İK teknolojileri hakkında güncel yazılar. İşletmenizi modernleştirin.',
+    title: t.blog.seoTitle,
+    description: t.blog.seoDesc,
     canonical: 'https://shiftlap.com/blog',
   });
 
@@ -30,7 +32,7 @@ export default function Blog() {
   const categories = getAllCategories();
 
   const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString('tr-TR', {
+    return new Date(dateStr).toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', {
       year: 'numeric', month: 'long', day: 'numeric',
     });
   };
@@ -47,14 +49,14 @@ export default function Blog() {
           <motion.div {...fadeUp(0)}>
             <div className="badge" style={{ display: 'inline-flex' }}>
               <BookOpen size={14} />
-              Shiftlap Blog
+              {t.blog.badge}
             </div>
           </motion.div>
           <motion.h1 {...fadeUp(0.1)} className="section-title">
-            PDKS ve Personel Yönetimi Hakkında
+            {t.blog.title}
           </motion.h1>
           <motion.p {...fadeUp(0.15)} className="section-subtitle">
-            İşletmenizi modernleştirmek için bilmeniz gereken her şey.
+            {t.blog.subtitle}
           </motion.p>
         </div>
       </section>
@@ -138,7 +140,7 @@ export default function Blog() {
                       </span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.78rem', color: 'var(--text-subtle)' }}>
                         <Clock size={12} />
-                        {post.readTime} dk okuma
+                        {post.readTime} {t.blog.readTime}
                       </span>
                     </div>
 
@@ -181,7 +183,7 @@ export default function Blog() {
                         display: 'flex', alignItems: 'center', gap: 4,
                         fontSize: '0.82rem', fontWeight: 600, color: 'var(--primary)',
                       }}>
-                        Devamını Oku
+                        {t.blog.readMore}
                         <ArrowRight size={14} />
                       </span>
                     </div>
@@ -195,7 +197,7 @@ export default function Blog() {
           {posts.length === 0 && (
             <div className="text-center" style={{ padding: '4rem 0' }}>
               <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>
-                Henüz yayınlanmış bir yazı bulunmuyor. Yakında burada olacağız!
+                {t.blog.emptyState}
               </p>
             </div>
           )}
