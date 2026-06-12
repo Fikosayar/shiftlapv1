@@ -10,6 +10,7 @@ const navLinks = [
   { name: t.nav.features,   path: '/ozellikler' },
   { name: t.nav.howItWorks, path: '/nasil-calisir' },
   { name: 'Fiyatlar',       path: '/fiyatlandirma' },
+  { name: 'Blog',           path: '/blog' },
   { name: t.nav.contact,    path: '/iletisim' },
 ];
 

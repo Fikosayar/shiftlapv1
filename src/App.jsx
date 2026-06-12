@@ -13,6 +13,8 @@ import Features from './pages/Features';
 import HowItWorks from './pages/HowItWorks';
 import Contact from './pages/Contact';
 import Pricing from './pages/Pricing';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
               <Route path="/nasil-calisir" element={<HowItWorks />} />
               <Route path="/iletisim" element={<Contact />} />
               <Route path="/fiyatlandirma" element={<Pricing />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
             </Routes>
           </AnimatePresence>
         </main>

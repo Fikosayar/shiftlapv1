@@ -8,6 +8,7 @@ const footerLinks = [
   { label: 'Özellikler', to: '/ozellikler' },
   { label: 'Nasıl Çalışır?', to: '/nasil-calisir' },
   { label: 'Fiyatlandırma', to: '/fiyatlandirma' },
+  { label: 'Blog', to: '/blog' },
   { label: 'İletişim', to: '/iletisim' },
 ];
 
