@@ -9,6 +9,7 @@ const navLinks = [
   { name: t.nav.about,      path: '/pdks-nedir' },
   { name: t.nav.features,   path: '/ozellikler' },
   { name: t.nav.howItWorks, path: '/nasil-calisir' },
+  { name: 'Fiyatlar',       path: '/fiyatlandirma' },
   { name: t.nav.contact,    path: '/iletisim' },
 ];
 

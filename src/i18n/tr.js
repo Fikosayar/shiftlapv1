@@ -20,7 +20,7 @@ export const t = {
     name: 'Shiftlap',
     tagline: 'Bulut Tabanlı PDKS ve Personel Takip Sistemi',
     phone: '0536 475 3784',
-    email: 'info@shiftlab.com',
+    email: 'info@shiftlap.com',
     whatsapp: 'https://wa.me/905364753784?text=Merhabalar,%20size%20web%20sitenizden%20ula%C5%9F%C4%B1yorum%20%C3%BCr%C3%BCn%C3%BCn%C3%BCz%20hakk%C4%B1nda%20bilgi%20almak%20i%C3%A7in%20rahats%C4%B1z%20ettim',
     address: 'Online Destek',
   },
@@ -131,7 +131,7 @@ export const t = {
     subtitle: 'Ürün hakkında sorunuz mu var? Fiyat teklifi mi istiyorsunuz? Size en hızlı şekilde geri döneceğiz.',
     cards: [
       { label: 'Telefon', value: '0536 475 3784', sub: 'Haftaiçi 09:00–18:00' },
-      { label: 'E-posta', value: 'info@shiftlab.com', sub: 'Ortalama 2 saat içinde yanıt' },
+      { label: 'E-posta', value: 'info@shiftlap.com', sub: 'Ortalama 2 saat içinde yanıt' },
       { label: 'WhatsApp', value: 'Anlık Destek', sub: 'Mesai saatleri içinde' },
     ],
     whatsappTitle: 'Hızlı Yanıt İçin WhatsApp',

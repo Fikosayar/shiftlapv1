@@ -7,6 +7,7 @@ const footerLinks = [
   { label: 'PDKS Nedir?', to: '/pdks-nedir' },
   { label: 'Özellikler', to: '/ozellikler' },
   { label: 'Nasıl Çalışır?', to: '/nasil-calisir' },
+  { label: 'Fiyatlandırma', to: '/fiyatlandirma' },
   { label: 'İletişim', to: '/iletisim' },
 ];
 
@@ -99,7 +100,7 @@ export default function Footer() {
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
                 { icon: Phone, text: '0536 475 3784', href: 'tel:+905364753784' },
-                { icon: Mail, text: 'info@shiftlab.com', href: 'mailto:info@shiftlab.com' },
+                { icon: Mail, text: 'info@shiftlap.com', href: 'mailto:info@shiftlap.com' },
                 { icon: MapPin, text: 'Online Destek', href: null },
               ].map((item, i) => {
                 const Icon = item.icon;

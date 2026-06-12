@@ -50,7 +50,7 @@ const faqs = [
 ];
 
 const stats = [
-  { value: '500+', label: 'Aktif İşletme', icon: Users },
+  { value: '0₺', label: 'Donanım Maliyeti', icon: Users },
   { value: '%99.9', label: 'Uptime Garantisi', icon: Clock },
   { value: '<30s', label: 'Kurulum Süresi', icon: ChevronRight },
 ];

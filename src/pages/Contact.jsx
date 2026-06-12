@@ -6,7 +6,7 @@ import { useSEO } from '../hooks/useSEO';
 const Contact = () => {
   useSEO({
     title: 'Iletisim | Shiftlap PDKS',
-    description: '0536 475 3784 numarali telefon veya info@shiftlab.com e-postasi ile bize ulasin. WhatsApp anlik destek icin hazir.',
+    description: '0536 475 3784 numarali telefon veya info@shiftlap.com e-postasi ile bize ulasin. WhatsApp anlik destek icin hazir.',
     canonical: 'https://shiftlap.com/iletisim',
   });
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -39,10 +39,10 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'E-posta',
-      value: 'info@shiftlab.com',
+      value: 'info@shiftlap.com',
       sub: 'Ortalama 2 saat içinde yanıt',
       color: '#3b82f6',
-      href: 'mailto:info@shiftlab.com'
+      href: 'mailto:info@shiftlap.com'
     },
     {
       icon: MessageCircle,

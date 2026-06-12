@@ -12,6 +12,7 @@ import AboutPdks from './pages/AboutPdks';
 import Features from './pages/Features';
 import HowItWorks from './pages/HowItWorks';
 import Contact from './pages/Contact';
+import Pricing from './pages/Pricing';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/ozellikler" element={<Features />} />
               <Route path="/nasil-calisir" element={<HowItWorks />} />
               <Route path="/iletisim" element={<Contact />} />
+              <Route path="/fiyatlandirma" element={<Pricing />} />
             </Routes>
           </AnimatePresence>
         </main>
