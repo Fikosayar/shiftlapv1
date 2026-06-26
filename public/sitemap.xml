@@ -4,74 +4,114 @@
 
   <url>
     <loc>https://shiftlap.com/</loc>
-    <lastmod>2025-05-08</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <!-- future hreflang for i18n:
     <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://shiftlap.com/en/"/>
-    -->
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/"/>
   </url>
 
   <url>
     <loc>https://shiftlap.com/pdks-nedir</loc>
-    <lastmod>2025-05-08</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/pdks-nedir"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/pdks-nedir"/>
   </url>
 
   <url>
     <loc>https://shiftlap.com/ozellikler</loc>
-    <lastmod>2025-05-08</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/ozellikler"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/ozellikler"/>
   </url>
 
   <url>
     <loc>https://shiftlap.com/nasil-calisir</loc>
-    <lastmod>2025-05-08</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://shiftlap.com/iletisim</loc>
-    <lastmod>2025-06-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/nasil-calisir"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/nasil-calisir"/>
   </url>
 
   <url>
     <loc>https://shiftlap.com/fiyatlandirma</loc>
-    <lastmod>2025-06-12</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/fiyatlandirma"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/fiyatlandirma"/>
+  </url>
+
+  <url>
+    <loc>https://shiftlap.com/iletisim</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/iletisim"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/iletisim"/>
   </url>
 
   <url>
     <loc>https://shiftlap.com/blog</loc>
-    <lastmod>2025-06-12</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://shiftlap.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shiftlap.com/blog"/>
   </url>
 
+  <!-- Blog Yazıları -->
   <url>
     <loc>https://shiftlap.com/blog/pdks-nedir-kapsamli-rehber</loc>
-    <lastmod>2025-06-12</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://shiftlap.com/blog/qr-kod-ile-personel-takibi</loc>
-    <lastmod>2025-06-12</lastmod>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://shiftlap.com/blog/excel-puantaj-takibi-neden-yetersiz</loc>
-    <lastmod>2025-06-12</lastmod>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://shiftlap.com/blog/is-kanunu-calisma-saati-takibi</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://shiftlap.com/blog/vardiya-yonetimi-rehberi</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://shiftlap.com/blog/pdks-maliyet-karsilastirma-2025</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://shiftlap.com/blog/uzaktan-calisan-personel-takibi</loc>
+    <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
